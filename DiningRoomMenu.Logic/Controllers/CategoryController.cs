@@ -28,6 +28,8 @@ namespace DiningRoomMenu.Logic.Controllers
 
                     unitOfWork.Categories.Add(categoryEntity);
                     unitOfWork.Commit();
+
+                    message = "Category added";
                 }
                 catch (Exception ex)
                 {

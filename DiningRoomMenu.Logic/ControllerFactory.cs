@@ -33,5 +33,12 @@ namespace DiningRoomMenu.Logic
 
             return new CategoryController(unitOfWork);
         }
+
+        public IStockController CreateStockController()
+        {
+            IUnitOfWork unitOfWork = CreateUnitOfWork();
+
+            return new StockController(unitOfWork);
+        }
     }
 }

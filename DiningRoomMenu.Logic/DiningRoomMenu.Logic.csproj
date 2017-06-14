@@ -41,11 +41,13 @@
   <ItemGroup>
     <Compile Include="Contracts\Controllers\ICategoryController.cs" />
     <Compile Include="Contracts\Controllers\IConnectionController.cs" />
+    <Compile Include="Contracts\Controllers\IStockController.cs" />
     <Compile Include="Contracts\IControllerFactory.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\StockController.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Infrastructure\ControllerMessage.cs" />
     <Compile Include="Infrastructure\ExceptionMessageBuilder.cs" />
@@ -65,7 +67,7 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="DTO\Categories\" />
+    <Folder Include="DTO\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

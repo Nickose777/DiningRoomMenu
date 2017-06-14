@@ -1,5 +1,7 @@
 ﻿using DiningRoomMenu.Controls.CategoryControls.ViewModels;
 using DiningRoomMenu.Controls.CategoryControls.Views;
+using DiningRoomMenu.Controls.StockControls.ViewModels;
+using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.Infrastructure;
@@ -48,6 +50,33 @@ namespace DiningRoomMenu
                     if (controllerMessage.IsSuccess)
                     {
                         viewModel.Name = String.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            window.Show();
+        }
+
+        private void AddStock_Click(object sender, RoutedEventArgs e)
+        {
+            StockAddViewModel viewModel = new StockAddViewModel();
+            StockAddView view = new StockAddView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.StockAdded += (s, ea) =>
+            {
+                int stockNo = Convert.ToInt32(ea.Data);
+                using (IStockController controller = factory.CreateStockController())
+                {
+                    ControllerMessage controllerMessage = controller.Add(stockNo);
+
+                    if (controllerMessage.IsSuccess)
+                    {
+                        viewModel.StockNo = String.Empty;
                     }
                     else
                     {

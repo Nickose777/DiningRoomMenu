@@ -77,8 +77,16 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\StockControls\ViewModels\StockAddViewModel.cs" />
+    <Compile Include="Controls\StockControls\Views\StockAddView.xaml.cs">
+      <DependentUpon>StockAddView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WindowFactory.cs" />
     <Page Include="Controls\CategoryControls\Views\CategoryAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StockControls\Views\StockAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -95,7 +103,7 @@
       <DependentUpon>CategoryAddView.xaml</DependentUpon>
     </Compile>
     <Compile Include="DelegateCommand.cs" />
-    <Compile Include="EventHandlers\CategoryEventHandlers.cs" />
+    <Compile Include="EventHandlers\GenericEventHandler.cs" />
     <Compile Include="EventHandlers\GenericEventArgs.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

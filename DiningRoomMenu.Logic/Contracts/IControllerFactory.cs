@@ -7,5 +7,7 @@ namespace DiningRoomMenu.Logic.Contracts
         IConnectionController CreateConnectionController();
 
         ICategoryController CreateCategoryController();
+
+        IStockController CreateStockController();
     }
 }
