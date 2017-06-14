@@ -6,7 +6,7 @@ namespace DiningRoomMenu.Controls.CategoryControls.ViewModels
 {
     public class CategoryAddViewModel : ObservableObject
     {
-        public event GenericEventHandler CategoryAdded;
+        public event GenericEventHandler<string> CategoryAdded;
 
         private string name;
 

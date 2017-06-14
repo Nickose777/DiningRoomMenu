@@ -1,5 +1,7 @@
 ﻿using DiningRoomMenu.Controls.CategoryControls.ViewModels;
 using DiningRoomMenu.Controls.CategoryControls.Views;
+using DiningRoomMenu.Controls.DishControls.ViewModels;
+using DiningRoomMenu.Controls.DishControls.Views;
 using DiningRoomMenu.Controls.IngredientControls.ViewModels;
 using DiningRoomMenu.Controls.IngredientControls.Views;
 using DiningRoomMenu.Controls.StockControls.ViewModels;
@@ -193,6 +195,48 @@ namespace DiningRoomMenu
             IngredientListViewModel viewModel = new IngredientListViewModel(ingredients);
             IngredientListView view = new IngredientListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
+
+        private void AddDish_Click(object sender, RoutedEventArgs e)
+        {
+            using (ICategoryController controller = factory.CreateCategoryController())
+            {
+                DataControllerMessage<IEnumerable<CategoryDisplayDTO>> controllerMessage = controller.GetAll();
+                if (controllerMessage.IsSuccess)
+                {
+                    AddDish(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void AddDish(IEnumerable<CategoryDisplayDTO> categories)
+        {
+            DishAddViewModel viewModel = new DishAddViewModel(categories);
+            DishAddView view = new DishAddView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.DishAdded += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.Add(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        viewModel.Name = String.Empty;
+                        viewModel.Price = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
 
             window.Show();
         }

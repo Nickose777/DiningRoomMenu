@@ -10,7 +10,7 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
 {
     public class StockAddViewModel : ObservableObject
     {
-        public event GenericEventHandler StockAdded;
+        public event GenericEventHandler<string> StockAdded;
 
         private string stockNo;
 

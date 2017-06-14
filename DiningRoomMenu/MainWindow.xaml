@@ -9,6 +9,7 @@
         <Button Content="All categories" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="75" Click="AllCategories_Click" />
         <Button Content="Add ingredient" HorizontalAlignment="Left" Margin="170,10,0,0" VerticalAlignment="Top" Width="75" Click="AddIngredient_Click" />
         <Button Content="All ingredients" HorizontalAlignment="Left" Margin="170,37,0,0" VerticalAlignment="Top" Width="75" Click="AllIngredients_Click" />
+        <Button Content="Add dish" HorizontalAlignment="Left" Margin="250,10,0,0" VerticalAlignment="Top" Width="75" Click="AddDish_Click" />
 
     </Grid>
 </Window>

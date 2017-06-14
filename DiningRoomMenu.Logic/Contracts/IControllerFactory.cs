@@ -11,5 +11,7 @@ namespace DiningRoomMenu.Logic.Contracts
         IStockController CreateStockController();
 
         IIngredientController CreateIngredientController();
+
+        IDishController CreateDishController();
     }
 }

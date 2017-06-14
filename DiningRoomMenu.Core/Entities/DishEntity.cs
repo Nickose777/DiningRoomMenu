@@ -12,7 +12,7 @@ namespace DiningRoomMenu.Core.Entities
 
         public string Name { get; set; }
 
-        public decimal Sum { get; set; }
+        public decimal Price { get; set; }
 
         public int CategoryId { get; set; }
         public virtual CategoryEntity Category { get; set; }

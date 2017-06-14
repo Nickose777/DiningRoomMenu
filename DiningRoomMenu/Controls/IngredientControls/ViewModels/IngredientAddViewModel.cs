@@ -10,7 +10,7 @@ namespace DiningRoomMenu.Controls.IngredientControls.ViewModels
 {
     public class IngredientAddViewModel : ObservableObject
     {
-        public event GenericEventHandler IngredientAdded;
+        public event GenericEventHandler<string> IngredientAdded;
 
         private string name;
 

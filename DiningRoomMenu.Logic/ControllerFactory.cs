@@ -47,5 +47,12 @@ namespace DiningRoomMenu.Logic
 
             return new IngredientController(unitOfWork);
         }
+
+        public IDishController CreateDishController()
+        {
+            IUnitOfWork unitOfWork = CreateUnitOfWork();
+
+            return new DishController(unitOfWork);
+        }
     }
 }
