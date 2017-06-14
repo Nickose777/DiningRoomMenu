@@ -13,5 +13,12 @@ namespace DiningRoomMenu.Logic.DTO.Recipe
         public string DishName { get; set; }
 
         public string Description { get; set; }
+
+        public List<IngredientPortion> Ingredients { get; set; }
+
+        public RecipeAddDTO()
+        {
+            Ingredients = new List<IngredientPortion>();
+        }
     }
 }

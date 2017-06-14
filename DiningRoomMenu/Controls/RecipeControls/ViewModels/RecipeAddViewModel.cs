@@ -1,4 +1,5 @@
-﻿using DiningRoomMenu.EventHandlers;
+﻿using DiningRoomMenu.Controls.IngredientControls.ViewModels;
+using DiningRoomMenu.EventHandlers;
 using DiningRoomMenu.Logic.DTO.Dish;
 using DiningRoomMenu.Logic.DTO.Recipe;
 using System;
@@ -18,17 +19,40 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
         private RecipeAddDTO recipe;
 
         private DishDisplayDTO dish;
+        private IngredientPortion ingredientPortion;
+        private string portion;
 
-        public RecipeAddViewModel(IEnumerable<DishDisplayDTO> dishes)
+        public RecipeAddViewModel(IEnumerable<DishDisplayDTO> dishes, IngredientListViewModel ingredientsViewModel)
         {
             this.recipe = new RecipeAddDTO();
 
             this.SaveCommand = new DelegateCommand(Save, CanSave);
+            this.RemoveCommand = new DelegateCommand(
+                () => Ingredients.Remove(IngredientPortion), 
+                obj => IngredientPortion != null);
+
+            this.IngredientsViewModel = ingredientsViewModel;
 
             this.Dishes = new ObservableCollection<DishDisplayDTO>(dishes);
+            this.Ingredients = new ObservableCollection<IngredientPortion>();
+
+            ingredientsViewModel.IngredientSelected += (s, e) =>
+            {
+                string ingredientName = e.Data.Name;
+                if (!Ingredients.Any(ingredientPortion => ingredientPortion.Ingredient == ingredientName))
+                {
+                    Ingredients.Add(new IngredientPortion { Ingredient = ingredientName, Portion = Portion });
+                }
+
+                Portion = String.Empty;
+            };
         }
 
         public ICommand SaveCommand { get; private set; }
+
+        public ICommand RemoveCommand { get; private set; }
+
+        public IngredientListViewModel IngredientsViewModel { get; private set; }
 
         public string Name
         {
@@ -50,6 +74,16 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
             }
         }
 
+        public string Portion
+        {
+            get { return portion; }
+            set
+            {
+                portion = value;
+                RaisePropertyChangedEvent("Portion");
+            }
+        }
+
         public DishDisplayDTO Dish
         {
             get { return dish; }
@@ -60,11 +94,25 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
             }
         }
 
+        public IngredientPortion IngredientPortion
+        {
+            get { return ingredientPortion; }
+            set
+            {
+                ingredientPortion = value;
+                RaisePropertyChangedEvent("IngredientPortion");
+            }
+        }
+
         public ObservableCollection<DishDisplayDTO> Dishes { get; private set; }
+
+        public ObservableCollection<IngredientPortion> Ingredients { get; private set; }
 
         private void Save()
         {
             recipe.DishName = Dish.Name;
+            recipe.Ingredients.AddRange(Ingredients);
+
             RaiseRecipeAddedEvent(recipe);
         }
 

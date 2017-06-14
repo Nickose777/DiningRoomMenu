@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:Views="clr-namespace:DiningRoomMenu.Controls.IngredientControls.Views"
              mc:Ignorable="d" 
+
              d:DesignHeight="300" d:DesignWidth="300">
     <GroupBox Header="Add Recipe">
         <Grid>
@@ -15,12 +17,14 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <TextBlock Grid.Row="0" Text="Name:" />
             <TextBlock Grid.Row="1" Text="Description:" />
             <TextBlock Grid.Row="2" Text="Dish:" />
+            <TextBlock Grid.Row="3" Text="Ingredients:" />
 
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
             <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Description}" />
@@ -39,7 +43,38 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.ColumnSpan="2" Grid.Row="3" Content="Add" Command="{Binding SaveCommand}" />
+            <Grid Grid.Column="1" Grid.Row="3">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding Portion}" />
+                <Views:IngredientListView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding IngredientsViewModel}" />
+
+                <ListBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" ItemsSource="{Binding Ingredients}" SelectedItem="{Binding IngredientPortion}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock>
+                                <TextBlock.Text>
+                                    <MultiBinding StringFormat="{}{0}. {1}">
+                                        <Binding Path="Ingredient" />
+                                        <Binding Path="Portion" />
+                                    </MultiBinding>
+                                </TextBlock.Text>
+                            </TextBlock>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+                <Button Grid.Column="1" Grid.Row="2" Content="Remove" Command="{Binding RemoveCommand}" />
+            </Grid>
+            <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Add" Command="{Binding SaveCommand}" />
         </Grid>
     </GroupBox>
 </UserControl>

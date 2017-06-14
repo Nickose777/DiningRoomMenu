@@ -247,23 +247,36 @@ namespace DiningRoomMenu
 
         private void AddRecipe_Click(object sender, RoutedEventArgs e)
         {
-            using (IDishController controller = factory.CreateDishController())
+            using (IDishController dishController = factory.CreateDishController())
             {
-                DataControllerMessage<IEnumerable<DishDisplayDTO>> controllerMessage = controller.GetAll();
-                if (controllerMessage.IsSuccess)
+                using (IIngredientController ingredientController = factory.CreateIngredientController())
                 {
-                    AddRecipe(controllerMessage.Data);
-                }
-                else
-                {
-                    MessageBox.Show(controllerMessage.Message);
+                    DataControllerMessage<IEnumerable<IngredientDisplayDTO>> controllerMessage1 = ingredientController.GetAll();
+
+                    if (controllerMessage1.IsSuccess)
+                    {
+                        IngredientListViewModel viewModel = new IngredientListViewModel(controllerMessage1.Data);
+                        DataControllerMessage<IEnumerable<DishDisplayDTO>> controllerMessage2 = dishController.GetAll();
+                        if (controllerMessage2.IsSuccess)
+                        {
+                            AddRecipe(controllerMessage2.Data, viewModel);
+                        }
+                        else
+                        {
+                            MessageBox.Show(controllerMessage2.Message);
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage1.Message);
+                    }
                 }
             }
         }
 
-        private void AddRecipe(IEnumerable<DishDisplayDTO> dishes)
+        private void AddRecipe(IEnumerable<DishDisplayDTO> dishes, IngredientListViewModel ingredientsViewModel)
         {
-            RecipeAddViewModel viewModel = new RecipeAddViewModel(dishes);
+            RecipeAddViewModel viewModel = new RecipeAddViewModel(dishes, ingredientsViewModel);
             RecipeAddView view = new RecipeAddView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
@@ -276,6 +289,7 @@ namespace DiningRoomMenu
                     {
                         viewModel.Name = String.Empty;
                         viewModel.Description = String.Empty;
+                        viewModel.Ingredients.Clear();
                     }
                     else
                     {

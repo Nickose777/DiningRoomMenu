@@ -32,8 +32,23 @@ namespace DiningRoomMenu.Logic.Controllers
                         {
                             Name = recipeAddDTO.Name,
                             Description = recipeAddDTO.Description,
-                            Dish = dish
+                            Dish = dish,
+                            RecipeIngredients = new List<RecipeIngredientEntity>()
                         };
+
+                        foreach (IngredientPortion ingredientPortion in recipeAddDTO.Ingredients)
+                        {
+                            IngredientEntity ingredientEntity = unitOfWork.Ingredients.Get(ingredientPortion.Ingredient);
+                            if (ingredientEntity != null)
+                            {
+                                recipeEntity.RecipeIngredients.Add(new RecipeIngredientEntity
+                                {
+                                    Ingredient = ingredientEntity,
+                                    Recipe = recipeEntity,
+                                    Portion = ingredientPortion.Portion
+                                });
+                            }
+                        }
 
                         unitOfWork.Recipes.Add(recipeEntity);
                         unitOfWork.Commit();
@@ -76,7 +91,11 @@ namespace DiningRoomMenu.Logic.Controllers
 
                         foreach (RecipeIngredientEntity recipeIngredient in recipe.RecipeIngredients)
                         {
-                            recipeDTO.Ingredients.Add(recipeIngredient.Ingredient.Name);
+                            recipeDTO.IngredientPortion.Add(new IngredientPortion 
+                            {
+                                Ingredient = recipeIngredient.Ingredient.Name,
+                                Portion = recipeIngredient.Portion
+                            });
                         }
 
                         return recipeDTO;
