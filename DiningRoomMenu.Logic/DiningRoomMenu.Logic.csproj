@@ -59,6 +59,7 @@
     <Compile Include="DTO\Dish\DishDisplayDTO.cs" />
     <Compile Include="DTO\Ingredient\IngredientDisplayDTO.cs" />
     <Compile Include="DTO\Recipe\RecipeAddDTO.cs" />
+    <Compile Include="DTO\Recipe\RecipeDisplayDTO.cs" />
     <Compile Include="DTO\Stock\StockDisplayDTO.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Infrastructure\ControllerMessage.cs" />

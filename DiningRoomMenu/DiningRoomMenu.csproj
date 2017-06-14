@@ -98,8 +98,12 @@
       <DependentUpon>IngredientListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\RecipeControls\ViewModels\RecipeAddViewModel.cs" />
+    <Compile Include="Controls\RecipeControls\ViewModels\RecipeListViewModel.cs" />
     <Compile Include="Controls\RecipeControls\Views\RecipeAddView.xaml.cs">
       <DependentUpon>RecipeAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\RecipeControls\Views\RecipeListView.xaml.cs">
+      <DependentUpon>RecipeListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StockControls\ViewModels\StockAddViewModel.cs" />
     <Compile Include="Controls\StockControls\ViewModels\StockListViewModel.cs" />
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\RecipeControls\Views\RecipeAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\RecipeControls\Views\RecipeListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -11,5 +11,7 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     public interface IRecipeController : IDisposable
     {
         ControllerMessage Add(RecipeAddDTO recipeAddDTO);
+
+        DataControllerMessage<IEnumerable<RecipeDisplayDTO>> GetAll();
     }
 }

@@ -13,6 +13,7 @@ using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Category;
 using DiningRoomMenu.Logic.DTO.Dish;
 using DiningRoomMenu.Logic.DTO.Ingredient;
+using DiningRoomMenu.Logic.DTO.Recipe;
 using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
@@ -306,6 +307,31 @@ namespace DiningRoomMenu
         {
             DishListViewModel viewModel = new DishListViewModel(dishes);
             DishListView view = new DishListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
+
+        private void AllRecipes_Click(object sender, RoutedEventArgs e)
+        {
+            using (IRecipeController controller = factory.CreateRecipeController())
+            {
+                DataControllerMessage<IEnumerable<RecipeDisplayDTO>> controllerMessage = controller.GetAll();
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayDishes(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayDishes(IEnumerable<RecipeDisplayDTO> recipes)
+        {
+            RecipeListViewModel viewModel = new RecipeListViewModel(recipes);
+            RecipeListView view = new RecipeListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();

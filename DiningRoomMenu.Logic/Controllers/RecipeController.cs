@@ -56,6 +56,43 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public DataControllerMessage<IEnumerable<RecipeDisplayDTO>> GetAll()
+        {
+            string message = String.Empty;
+            bool success = true;
+            IEnumerable<RecipeDisplayDTO> data = null;
+
+            try
+            {
+                data = unitOfWork.Recipes.GetAll()
+                    .Select(recipe =>
+                    {
+                        RecipeDisplayDTO recipeDTO = new RecipeDisplayDTO
+                        {
+                            Name = recipe.Name,
+                            DishName = recipe.Dish.Name,
+                            CategoryName = recipe.Dish.Category.Name
+                        };
+
+                        foreach (RecipeIngredientEntity recipeIngredient in recipe.RecipeIngredients)
+                        {
+                            recipeDTO.Ingredients.Add(recipeIngredient.Ingredient.Name);
+                        }
+
+                        return recipeDTO;
+                    })
+                    .OrderBy(recipe => recipe.CategoryName)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<IEnumerable<RecipeDisplayDTO>>(success, message, data);
+        }
+
         private bool Validate(RecipeAddDTO recipeAddDTO, ref string message)
         {
             bool isValid = true;
