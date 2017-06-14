@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
+using DiningRoomMenu.Logic;
+using DiningRoomMenu.Logic.Contracts;
 
 namespace DiningRoomMenu
 {
@@ -13,5 +9,16 @@ namespace DiningRoomMenu
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            IControllerFactory factory = Factory.CreateFactory();
+
+            MainWindow mainWindow = new MainWindow(factory);
+
+            this.ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
+            this.MainWindow = mainWindow;
+
+            mainWindow.Show();
+        }
     }
 }
