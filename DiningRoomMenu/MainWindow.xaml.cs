@@ -1,5 +1,7 @@
 ﻿using DiningRoomMenu.Controls.CategoryControls.ViewModels;
 using DiningRoomMenu.Controls.CategoryControls.Views;
+using DiningRoomMenu.Controls.IngredientControls.ViewModels;
+using DiningRoomMenu.Controls.IngredientControls.Views;
 using DiningRoomMenu.Controls.StockControls.ViewModels;
 using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
@@ -138,6 +140,32 @@ namespace DiningRoomMenu
             CategoryListViewModel viewModel = new CategoryListViewModel(categories);
             CategoryListView view = new CategoryListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
+
+        private void AddIngredient_Click(object sender, RoutedEventArgs e)
+        {
+            IngredientAddViewModel viewModel = new IngredientAddViewModel();
+            IngredientAddView view = new IngredientAddView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.IngredientAdded += (s, ea) =>
+            {
+                using (IIngredientController controller = factory.CreateIngredientController())
+                {
+                    ControllerMessage controllerMessage = controller.Add(ea.Data);
+
+                    if (controllerMessage.IsSuccess)
+                    {
+                        viewModel.Name = String.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
 
             window.Show();
         }

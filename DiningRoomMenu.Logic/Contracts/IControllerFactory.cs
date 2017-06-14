@@ -9,5 +9,7 @@ namespace DiningRoomMenu.Logic.Contracts
         ICategoryController CreateCategoryController();
 
         IStockController CreateStockController();
+
+        IIngredientController CreateIngredientController();
     }
 }

@@ -41,12 +41,14 @@
   <ItemGroup>
     <Compile Include="Contracts\Controllers\ICategoryController.cs" />
     <Compile Include="Contracts\Controllers\IConnectionController.cs" />
+    <Compile Include="Contracts\Controllers\IIngredientController.cs" />
     <Compile Include="Contracts\Controllers\IStockController.cs" />
     <Compile Include="Contracts\IControllerFactory.cs" />
     <Compile Include="ControllerFactory.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\IngredientController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="DTO\Category\CategoryDisplayDTO.cs" />
     <Compile Include="DTO\Stock\StockDisplayDTO.cs" />
