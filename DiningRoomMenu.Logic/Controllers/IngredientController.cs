@@ -1,6 +1,7 @@
 ﻿using DiningRoomMenu.Core.Entities;
 using DiningRoomMenu.Data.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
+using DiningRoomMenu.Logic.DTO.Ingredient;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,28 @@ namespace DiningRoomMenu.Logic.Controllers
             }
 
             return new ControllerMessage(success, message);
+        }
+
+        public DataControllerMessage<IEnumerable<IngredientDisplayDTO>> GetAll()
+        {
+            string message = String.Empty;
+            bool success = true;
+            IEnumerable<IngredientDisplayDTO> data = null;
+
+            try
+            {
+                data = unitOfWork.Ingredients.GetAll()
+                    .Select(ingredient => new IngredientDisplayDTO { Name = ingredient.Name })
+                    .OrderBy(ingredient => ingredient.Name)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<IEnumerable<IngredientDisplayDTO>>(success, message, data);
         }
 
         private bool Validate(string ingredientName, ref string message)

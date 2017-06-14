@@ -1,4 +1,5 @@
-﻿using DiningRoomMenu.Logic.Infrastructure;
+﻿using DiningRoomMenu.Logic.DTO.Ingredient;
+using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     public interface IIngredientController : IDisposable
     {
         ControllerMessage Add(string ingredientName);
+
+        DataControllerMessage<IEnumerable<IngredientDisplayDTO>> GetAll();
     }
 }

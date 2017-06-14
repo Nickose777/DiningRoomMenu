@@ -7,6 +7,7 @@ using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Category;
+using DiningRoomMenu.Logic.DTO.Ingredient;
 using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
@@ -166,6 +167,32 @@ namespace DiningRoomMenu
                     }
                 }
             };
+
+            window.Show();
+        }
+
+        private void AllIngredients_Click(object sender, RoutedEventArgs e)
+        {
+            using (IIngredientController controller = factory.CreateIngredientController())
+            {
+                DataControllerMessage<IEnumerable<IngredientDisplayDTO>> controllerMessage = controller.GetAll();
+
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayIngredients(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayIngredients(IEnumerable<IngredientDisplayDTO> ingredients)
+        {
+            IngredientListViewModel viewModel = new IngredientListViewModel(ingredients);
+            IngredientListView view = new IngredientListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();
         }
