@@ -6,6 +6,7 @@
         <Button Content="Add category" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Click="AddCategory_Click"/>
         <Button Content="Add stock" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="75" Click="AddStock_Click" />
         <Button Content="All stocks" HorizontalAlignment="Left" Margin="90,37,0,0" VerticalAlignment="Top" Width="75" Click="AllStock_Click" />
+        <Button Content="All categories" HorizontalAlignment="Left" Margin="10,37,0,0" VerticalAlignment="Top" Width="75" Click="AllCategories_Click" />
 
     </Grid>
 </Window>

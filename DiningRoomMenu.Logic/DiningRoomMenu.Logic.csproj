@@ -48,6 +48,7 @@
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\StockController.cs" />
+    <Compile Include="DTO\Category\CategoryDisplayDTO.cs" />
     <Compile Include="DTO\Stock\StockDisplayDTO.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="Infrastructure\ControllerMessage.cs" />

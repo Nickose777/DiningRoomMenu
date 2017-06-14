@@ -4,6 +4,7 @@ using DiningRoomMenu.Controls.StockControls.ViewModels;
 using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
+using DiningRoomMenu.Logic.DTO.Category;
 using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
@@ -110,6 +111,32 @@ namespace DiningRoomMenu
         {
             StockListViewModel viewModel = new StockListViewModel(stocks);
             StockListView view = new StockListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
+
+        private void AllCategories_Click(object sender, RoutedEventArgs e)
+        {
+            using (ICategoryController controller = factory.CreateCategoryController())
+            {
+                DataControllerMessage<IEnumerable<CategoryDisplayDTO>> controllerMessage = controller.GetAll();
+
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayCategories(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayCategories(IEnumerable<CategoryDisplayDTO> categories)
+        {
+            CategoryListViewModel viewModel = new CategoryListViewModel(categories);
+            CategoryListView view = new CategoryListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();

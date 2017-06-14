@@ -1,4 +1,5 @@
-﻿using DiningRoomMenu.Logic.Infrastructure;
+﻿using DiningRoomMenu.Logic.DTO.Category;
+using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     public interface ICategoryController : IDisposable
     {
         ControllerMessage Add(string categoryName);
+
+        DataControllerMessage<IEnumerable<CategoryDisplayDTO>> GetAll();
     }
 }
