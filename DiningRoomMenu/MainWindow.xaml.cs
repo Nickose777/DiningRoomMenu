@@ -285,5 +285,30 @@ namespace DiningRoomMenu
 
             window.Show();
         }
+
+        private void AllDishes_Click(object sender, RoutedEventArgs e)
+        {
+            using (IDishController controller = factory.CreateDishController())
+            {
+                DataControllerMessage<IEnumerable<DishDisplayDTO>> controllerMessage = controller.GetAll();
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayDishes(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayDishes(IEnumerable<DishDisplayDTO> dishes)
+        {
+            DishListViewModel viewModel = new DishListViewModel(dishes);
+            DishListView view = new DishListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
     }
 }
