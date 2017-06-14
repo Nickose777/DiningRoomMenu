@@ -1,4 +1,4 @@
-﻿using DiningRoomMenu.Logic.DTO.Dish;
+﻿using DiningRoomMenu.Logic.DTO.Recipe;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -8,10 +8,8 @@ using System.Threading.Tasks;
 
 namespace DiningRoomMenu.Logic.Contracts.Controllers
 {
-    public interface IDishController : IDisposable
+    public interface IRecipeController : IDisposable
     {
-        ControllerMessage Add(DishAddDTO dishAddDTO);
-
-        DataControllerMessage<IEnumerable<DishDisplayDTO>> GetAll();
+        ControllerMessage Add(RecipeAddDTO recipeAddDTO);
     }
 }

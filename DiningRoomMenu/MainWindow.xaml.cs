@@ -4,11 +4,14 @@ using DiningRoomMenu.Controls.DishControls.ViewModels;
 using DiningRoomMenu.Controls.DishControls.Views;
 using DiningRoomMenu.Controls.IngredientControls.ViewModels;
 using DiningRoomMenu.Controls.IngredientControls.Views;
+using DiningRoomMenu.Controls.RecipeControls.ViewModels;
+using DiningRoomMenu.Controls.RecipeControls.Views;
 using DiningRoomMenu.Controls.StockControls.ViewModels;
 using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Category;
+using DiningRoomMenu.Logic.DTO.Dish;
 using DiningRoomMenu.Logic.DTO.Ingredient;
 using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
@@ -230,6 +233,48 @@ namespace DiningRoomMenu
                     {
                         viewModel.Name = String.Empty;
                         viewModel.Price = 0;
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            window.Show();
+        }
+
+        private void AddRecipe_Click(object sender, RoutedEventArgs e)
+        {
+            using (IDishController controller = factory.CreateDishController())
+            {
+                DataControllerMessage<IEnumerable<DishDisplayDTO>> controllerMessage = controller.GetAll();
+                if (controllerMessage.IsSuccess)
+                {
+                    AddRecipe(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void AddRecipe(IEnumerable<DishDisplayDTO> dishes)
+        {
+            RecipeAddViewModel viewModel = new RecipeAddViewModel(dishes);
+            RecipeAddView view = new RecipeAddView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.RecipeAdded += (s, ea) =>
+            {
+                using (IRecipeController controller = factory.CreateRecipeController())
+                {
+                    ControllerMessage controllerMessage = controller.Add(ea.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        viewModel.Name = String.Empty;
+                        viewModel.Description = String.Empty;
                     }
                     else
                     {

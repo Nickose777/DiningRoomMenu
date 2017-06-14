@@ -56,6 +56,33 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public DataControllerMessage<IEnumerable<DishDisplayDTO>> GetAll()
+        {
+            string message = String.Empty;
+            bool success = true;
+            IEnumerable<DishDisplayDTO> data = null;
+
+            try
+            {
+                data = unitOfWork.Dishes.GetAll()
+                    .Select(dish => new DishDisplayDTO 
+                    { 
+                        Name = dish.Name,
+                        Price = dish.Price,
+                        CategoryName = dish.Category.Name
+                    })
+                    .OrderBy(dish => dish.Name)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<IEnumerable<DishDisplayDTO>>(success, message, data);
+        }
+
         private bool Validate(DishAddDTO dishAddDTO, ref string message)
         {
             bool isValid = true;
@@ -65,10 +92,10 @@ namespace DiningRoomMenu.Logic.Controllers
                 isValid = false;
                 message = "Dish's name cannot be empty";
             }
-            if (dishAddDTO.Name.Length > 20)
+            if (dishAddDTO.Name.Length > 40)
             {
                 isValid = false;
-                message = "Dish's name cannot be more then 20 symbols";
+                message = "Dish's name cannot be more then 40 symbols";
             }
             else if (String.IsNullOrEmpty(dishAddDTO.CategoryName))
             {

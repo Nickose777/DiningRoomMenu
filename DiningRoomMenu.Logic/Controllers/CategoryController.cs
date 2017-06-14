@@ -74,10 +74,10 @@ namespace DiningRoomMenu.Logic.Controllers
                 isValid = false;
                 message = "Category's name cannot be empty";
             }
-            else if (categoryName.Length > 20)
+            else if (categoryName.Length > 40)
             {
                 isValid = false;
-                message = "Category's name cannot be longer then 20 symbols";
+                message = "Category's name cannot be longer then 40 symbols";
             }
             else if (unitOfWork.Categories.GetAll().Any(category => category.Name == categoryName))
             {

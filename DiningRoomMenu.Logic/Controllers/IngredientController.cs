@@ -76,10 +76,10 @@ namespace DiningRoomMenu.Logic.Controllers
                 isValid = false;
                 message = "Ingredient's name cannot be empty";
             }
-            else if (ingredientName.Length > 20)
+            else if (ingredientName.Length > 40)
             {
                 isValid = false;
-                message = "Ingredient's name cannot be longer then 20 symbols";
+                message = "Ingredient's name cannot be longer then 40 symbols";
             }
             else if (unitOfWork.Ingredients.GetAll().Any(ingredient => ingredient.Name == ingredientName))
             {

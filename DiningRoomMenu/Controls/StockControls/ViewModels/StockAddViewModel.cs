@@ -33,6 +33,12 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
             }
         }
 
+        private bool CanSave(object parameter)
+        {
+            int n;
+            return Int32.TryParse(stockNo, out n);
+        }
+
         private void RaiseStockAddedEvent(string stockNo)
         {
             var handler = StockAdded;
@@ -41,12 +47,6 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
                 GenericEventArgs<string> e = new GenericEventArgs<string>(stockNo);
                 handler(this, e);
             }
-        }
-
-        private bool CanSave(object parameter)
-        {
-            int n;
-            return Int32.TryParse(stockNo, out n);
         }
     }
 }
