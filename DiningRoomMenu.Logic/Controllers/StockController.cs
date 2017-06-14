@@ -28,6 +28,15 @@ namespace DiningRoomMenu.Logic.Controllers
                         StockNo = stockNo
                     };
 
+                    foreach (IngredientEntity ingredientEntity in unitOfWork.Ingredients.GetAll())
+                    {
+                        ingredientEntity.StockIngredients.Add(new StockIngredientEntity
+                        {
+                            Ingredient = ingredientEntity,
+                            Stock = stockEntity
+                        });
+                    }
+
                     unitOfWork.Stocks.Add(stockEntity);
                     unitOfWork.Commit();
 
