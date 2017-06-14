@@ -39,9 +39,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Contracts\Controllers\ICategoryController.cs" />
     <Compile Include="Contracts\Controllers\IConnectionController.cs" />
     <Compile Include="Contracts\IControllerFactory.cs" />
     <Compile Include="ControllerFactory.cs" />
+    <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ConnectionController.cs" />
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Factory.cs" />
@@ -62,7 +64,9 @@
   <ItemGroup>
     <None Include="app.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="DTO\Categories\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

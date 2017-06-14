@@ -1,4 +1,6 @@
-﻿using DiningRoomMenu.Logic.Contracts;
+﻿using DiningRoomMenu.Controls.CategoryControls.ViewModels;
+using DiningRoomMenu.Controls.CategoryControls.Views;
+using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
@@ -31,14 +33,30 @@ namespace DiningRoomMenu
             this.factory = factory;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void AddCategory_Click(object sender, RoutedEventArgs e)
         {
-            using (IConnectionController controller = factory.CreateConnectionController())
-            {
-                ControllerMessage controllerMessage = controller.TestConnection();
+            CategoryAddViewModel viewModel = new CategoryAddViewModel();
+            CategoryAddView view = new CategoryAddView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
 
-                MessageBox.Show(controllerMessage.Message);
-            }
+            viewModel.CategoryAdded += (s, ea) =>
+            {
+                using (ICategoryController controller = factory.CreateCategoryController())
+                {
+                    ControllerMessage controllerMessage = controller.Add(ea.Data);
+
+                    if (controllerMessage.IsSuccess)
+                    {
+                        viewModel.Name = String.Empty;
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            window.Show();
         }
     }
 }

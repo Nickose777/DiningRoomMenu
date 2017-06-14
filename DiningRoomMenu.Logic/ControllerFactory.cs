@@ -26,5 +26,12 @@ namespace DiningRoomMenu.Logic
 
             return new ConnectionController(unitOfWork);
         }
+
+        public ICategoryController CreateCategoryController()
+        {
+            IUnitOfWork unitOfWork = CreateUnitOfWork();
+
+            return new CategoryController(unitOfWork);
+        }
     }
 }
