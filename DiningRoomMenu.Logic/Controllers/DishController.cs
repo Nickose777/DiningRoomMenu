@@ -31,6 +31,7 @@ namespace DiningRoomMenu.Logic.Controllers
                         DishEntity dishEntity = new DishEntity
                         {
                             Name = dishAddDTO.Name,
+                            Price = dishAddDTO.Price,
                             Category = category
                         };
 

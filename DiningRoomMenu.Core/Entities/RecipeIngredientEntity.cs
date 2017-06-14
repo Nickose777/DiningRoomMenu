@@ -13,5 +13,7 @@ namespace DiningRoomMenu.Core.Entities
 
         public int IngredientId { get; set; }
         public virtual IngredientEntity Ingredient { get; set; }
+
+        public string Portion { get; set; }
     }
 }
