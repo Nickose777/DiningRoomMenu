@@ -4,6 +4,8 @@ using DiningRoomMenu.Core.Entities;
 using DiningRoomMenu.Data.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.Infrastructure;
+using System.Collections.Generic;
+using DiningRoomMenu.Logic.DTO.Stock;
 
 namespace DiningRoomMenu.Logic.Controllers
 {
@@ -39,6 +41,28 @@ namespace DiningRoomMenu.Logic.Controllers
             }
 
             return new ControllerMessage(success, message);
+        }
+
+        public DataControllerMessage<IEnumerable<StockDisplayDTO>> GetAll()
+        {
+            string message = String.Empty;
+            bool success = true;
+            IEnumerable<StockDisplayDTO> data = null;
+
+            try
+            {
+                data = unitOfWork.Stocks.GetAll()
+                    .Select(stock => new StockDisplayDTO { StockNo = stock.StockNo })
+                    .OrderBy(stock => stock.StockNo)
+                    .ToList();
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<IEnumerable<StockDisplayDTO>>(success, message, data);
         }
 
         private bool Validate(int stockNo, ref string message)

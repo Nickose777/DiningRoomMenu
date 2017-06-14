@@ -78,8 +78,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\StockControls\ViewModels\StockAddViewModel.cs" />
+    <Compile Include="Controls\StockControls\ViewModels\StockListViewModel.cs" />
     <Compile Include="Controls\StockControls\Views\StockAddView.xaml.cs">
       <DependentUpon>StockAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StockControls\Views\StockListView.xaml.cs">
+      <DependentUpon>StockListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WindowFactory.cs" />
     <Page Include="Controls\CategoryControls\Views\CategoryAddView.xaml">
@@ -87,6 +91,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StockControls\Views\StockAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StockControls\Views\StockListView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

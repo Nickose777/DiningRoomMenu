@@ -4,6 +4,7 @@ using DiningRoomMenu.Controls.StockControls.ViewModels;
 using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
+using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -84,6 +85,32 @@ namespace DiningRoomMenu
                     }
                 }
             };
+
+            window.Show();
+        }
+
+        private void AllStock_Click(object sender, RoutedEventArgs e)
+        {
+            using (IStockController controller = factory.CreateStockController())
+            {
+                DataControllerMessage<IEnumerable<StockDisplayDTO>> controllerMessage = controller.GetAll();
+
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayStocks(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayStocks(IEnumerable<StockDisplayDTO> stocks)
+        {
+            StockListViewModel viewModel = new StockListViewModel(stocks);
+            StockListView view = new StockListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();
         }
