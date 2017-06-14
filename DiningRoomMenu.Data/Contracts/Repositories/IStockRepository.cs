@@ -4,6 +4,6 @@ namespace DiningRoomMenu.Data.Contracts.Repositories
 {
     public interface IStockRepository : IRepository<StockEntity>
     {
-
+        StockEntity GetByNo(int stockNo);
     }
 }

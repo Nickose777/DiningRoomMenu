@@ -1,4 +1,5 @@
-﻿using DiningRoomMenu.Core.Entities;
+﻿using System.Linq;
+using DiningRoomMenu.Core.Entities;
 using DiningRoomMenu.Data.Contracts.Repositories;
 
 namespace DiningRoomMenu.Data.Repositories
@@ -7,5 +8,10 @@ namespace DiningRoomMenu.Data.Repositories
     {
         public StockRepository(DiningRoomMenuDbContext context)
             : base(context) { }
+
+        public StockEntity GetByNo(int stockNo)
+        {
+            return context.Stocks.SingleOrDefault(stock => stock.StockNo == stockNo);
+        }
     }
 }

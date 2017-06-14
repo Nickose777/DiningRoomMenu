@@ -106,9 +106,13 @@
       <DependentUpon>RecipeListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StockControls\ViewModels\StockAddViewModel.cs" />
+    <Compile Include="Controls\StockControls\ViewModels\StockEditViewModel.cs" />
     <Compile Include="Controls\StockControls\ViewModels\StockListViewModel.cs" />
     <Compile Include="Controls\StockControls\Views\StockAddView.xaml.cs">
       <DependentUpon>StockAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\StockControls\Views\StockEditView.xaml.cs">
+      <DependentUpon>StockEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\StockControls\Views\StockListView.xaml.cs">
       <DependentUpon>StockListView.xaml</DependentUpon>
@@ -147,6 +151,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\StockControls\Views\StockAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\StockControls\Views\StockEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

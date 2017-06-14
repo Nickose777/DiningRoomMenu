@@ -52,6 +52,45 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public DataControllerMessage<StockEditDTO> Get(int stockNo)
+        {
+            string message = String.Empty;
+            bool success = true;
+            StockEditDTO data = null;
+
+            try
+            {
+                StockEntity stockEntity = unitOfWork.Stocks.GetByNo(stockNo);
+                if (stockEntity != null)
+                {
+                    data = new StockEditDTO
+                    {
+                        StockNo = stockNo
+                    };
+                    foreach (StockIngredientEntity stockIngredientEntity in stockEntity.StockIngredients)
+                    {
+                        data.IngredientCount.Add(new IngredientCount
+                        {
+                            Ingredient = stockIngredientEntity.Ingredient.Name,
+                            Count = stockIngredientEntity.Count
+                        });
+                    }
+                }
+                else
+                {
+                    success = false;
+                    message = "Stock not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<StockEditDTO>(success, message, data);
+        }
+
         public DataControllerMessage<IEnumerable<StockDisplayDTO>> GetAll()
         {
             string message = String.Empty;
