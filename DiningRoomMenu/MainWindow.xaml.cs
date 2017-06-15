@@ -394,6 +394,47 @@ namespace DiningRoomMenu
             DishListView view = new DishListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
+            viewModel.DishSelected += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    DataControllerMessage<DishEditDTO> controllerMessage = controller.Get(e.Data.Name);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        Edit(controllerMessage.Data);
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            window.Show();
+        }
+
+        private void Edit(DishEditDTO dishEditDTO)
+        {
+            DishEditViewModel viewModel = new DishEditViewModel(dishEditDTO);
+            DishEditView view = new DishEditView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.DishSaveRequest += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.Update(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        //TODO
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
             window.Show();
         }
 

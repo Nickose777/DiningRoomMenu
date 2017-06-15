@@ -56,6 +56,72 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Update(DishEditDTO dishEditDTO)
+        {
+            string message = String.Empty;
+            bool success = Validate(dishEditDTO, ref message);
+
+            if (success)
+            {
+                try
+                {
+                    DishEntity dishEntity = unitOfWork.Dishes.Get(dishEditDTO.OldName);
+                    dishEntity.Name = dishEditDTO.NewName;
+                    dishEntity.Price = dishEditDTO.Price;
+
+                    unitOfWork.Commit();
+
+                    message = "Dish changed";
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+                }
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
+        public DataControllerMessage<DishEditDTO> Get(string dishName)
+        {
+            string message = String.Empty;
+            bool success = true;
+            DishEditDTO data = null;
+
+            try
+            {
+                DishEntity dishEntity = unitOfWork.Dishes.Get(dishName);
+                if (dishEntity != null)
+                {
+                    data = new DishEditDTO
+                    {
+                        NewName = dishEntity.Name,
+                        OldName = dishEntity.Name,
+                        Price = dishEntity.Price,
+                        CategoryName = dishEntity.Category.Name
+                    };
+
+                    foreach (RecipeEntity recipeEntity in dishEntity.Recipes)
+                    {
+                        data.Recipes.Add(recipeEntity.Name);
+                    }
+                }
+                else
+                {
+                    success = false;
+                    message = "Dish not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<DishEditDTO>(success, message, data);
+        }
+
         public DataControllerMessage<IEnumerable<DishDisplayDTO>> GetAll()
         {
             string message = String.Empty;
@@ -86,28 +152,68 @@ namespace DiningRoomMenu.Logic.Controllers
         private bool Validate(DishAddDTO dishAddDTO, ref string message)
         {
             bool isValid = true;
+            string name = dishAddDTO.Name;
+            string categoryName = dishAddDTO.CategoryName;
+            decimal price = dishAddDTO.Price;
 
-            if (String.IsNullOrEmpty(dishAddDTO.Name))
+            if (String.IsNullOrEmpty(name))
             {
                 isValid = false;
                 message = "Dish's name cannot be empty";
             }
-            if (dishAddDTO.Name.Length > 40)
+            if (name.Length > 40)
             {
                 isValid = false;
                 message = "Dish's name cannot be more then 40 symbols";
             }
-            else if (String.IsNullOrEmpty(dishAddDTO.CategoryName))
+            else if (String.IsNullOrEmpty(categoryName))
             {
                 isValid = false;
                 message = "Dish's category's name cannot be empty";
             }
-            else if (dishAddDTO.Price < 0)
+            else if (price < 0)
             {
                 isValid = false;
                 message = "Dish's price cannot be less then 0";
             }
-            else if (unitOfWork.Dishes.GetAll().Any(dish => dish.Name == dishAddDTO.Name))
+            else if (unitOfWork.Dishes.GetAll().Any(dish => dish.Name == name))
+            {
+                isValid = false;
+                message = "Dish with such name already exists";
+            }
+
+            return isValid;
+        }
+
+        private bool Validate(DishEditDTO dishEditDTO, ref string message)
+        {
+            bool isValid = true;
+            string oldName = dishEditDTO.OldName;
+            string newName = dishEditDTO.NewName;
+            string categoryName = dishEditDTO.CategoryName;
+            decimal price = dishEditDTO.Price;
+
+            if (String.IsNullOrEmpty(newName))
+            {
+                isValid = false;
+                message = "Dish's name cannot be empty";
+            }
+            if (newName.Length > 40)
+            {
+                isValid = false;
+                message = "Dish's name cannot be more then 40 symbols";
+            }
+            else if (String.IsNullOrEmpty(categoryName))
+            {
+                isValid = false;
+                message = "Dish's category's name cannot be empty";
+            }
+            else if (price < 0)
+            {
+                isValid = false;
+                message = "Dish's price cannot be less then 0";
+            }
+            else if (oldName != newName && unitOfWork.Dishes.GetAll().Any(dish => dish.Name == newName))
             {
                 isValid = false;
                 message = "Dish with such name already exists";

@@ -86,9 +86,13 @@
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DishControls\ViewModels\DishAddViewModel.cs" />
+    <Compile Include="Controls\DishControls\ViewModels\DishEditViewModel.cs" />
     <Compile Include="Controls\DishControls\ViewModels\DishListViewModel.cs" />
     <Compile Include="Controls\DishControls\Views\DishAddView.xaml.cs">
       <DependentUpon>DishAddView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\DishControls\Views\DishEditView.xaml.cs">
+      <DependentUpon>DishEditView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\DishControls\Views\DishListView.xaml.cs">
       <DependentUpon>DishListView.xaml</DependentUpon>
@@ -135,6 +139,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\DishControls\Views\DishAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\DishControls\Views\DishEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
