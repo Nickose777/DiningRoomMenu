@@ -77,7 +77,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Controls\CategoryControls\ViewModels\CategoryEditViewModel.cs" />
     <Compile Include="Controls\CategoryControls\ViewModels\CategoryListViewModel.cs" />
+    <Compile Include="Controls\CategoryControls\Views\CategoryEditView.xaml.cs">
+      <DependentUpon>CategoryEditView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CategoryControls\Views\CategoryListView.xaml.cs">
       <DependentUpon>CategoryListView.xaml</DependentUpon>
     </Compile>
@@ -119,6 +123,10 @@
     </Compile>
     <Compile Include="WindowFactory.cs" />
     <Page Include="Controls\CategoryControls\Views\CategoryAddView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\CategoryControls\Views\CategoryEditView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

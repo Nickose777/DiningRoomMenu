@@ -12,6 +12,10 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     {
         ControllerMessage Add(string categoryName);
 
+        ControllerMessage Update(CategoryEditDTO categoryEditDTO);
+
+        DataControllerMessage<CategoryEditDTO> Get(CategoryDisplayDTO categoryDisplayDTO);
+
         DataControllerMessage<IEnumerable<CategoryDisplayDTO>> GetAll();
     }
 }

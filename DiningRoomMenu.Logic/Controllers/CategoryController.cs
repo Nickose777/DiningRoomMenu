@@ -43,6 +43,61 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Update(CategoryEditDTO categoryEditDTO)
+        {
+            string message = String.Empty;
+            bool success = Validate(categoryEditDTO.NewName, ref message);
+
+            if (success)
+            {
+                try
+                {
+                    CategoryEntity categoryEntity = unitOfWork.Categories.Get(categoryEditDTO.OldName);
+                    categoryEntity.Name = categoryEditDTO.NewName;
+
+                    unitOfWork.Commit();
+
+                    message = "Category changed";
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+                }
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
+        public DataControllerMessage<CategoryEditDTO> Get(CategoryDisplayDTO categoryDisplayDTO)
+        {
+            string message = String.Empty;
+            bool success = true;
+            CategoryEditDTO data = null;
+
+            try
+            {
+                CategoryEntity categoryEntity = unitOfWork.Categories.Get(categoryDisplayDTO.Name);
+                data = new CategoryEditDTO
+                {
+                    NewName = categoryEntity.Name,
+                    OldName = categoryEntity.Name
+                };
+
+                foreach (string dishName in categoryEntity.Dishes.Select(dish => dish.Name))
+                {
+                    data.Dishes.Add(dishName);
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new DataControllerMessage<CategoryEditDTO>(success, message, data);
+        }
+
         public DataControllerMessage<IEnumerable<CategoryDisplayDTO>> GetAll()
         {
             string message = String.Empty;

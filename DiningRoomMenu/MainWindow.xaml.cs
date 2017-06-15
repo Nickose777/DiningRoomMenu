@@ -18,18 +18,7 @@ using DiningRoomMenu.Logic.DTO.Stock;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace DiningRoomMenu
 {
@@ -172,6 +161,47 @@ namespace DiningRoomMenu
             CategoryListViewModel viewModel = new CategoryListViewModel(categories);
             CategoryListView view = new CategoryListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.CategorySelected += (s, e) =>
+            {
+                using (ICategoryController controller = factory.CreateCategoryController())
+                {
+                    DataControllerMessage<CategoryEditDTO> controllerMessage = controller.Get(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        DisplayCategory(controllerMessage.Data);
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            window.Show();
+        }
+
+        private void DisplayCategory(CategoryEditDTO categoryEditDTO)
+        {
+            CategoryEditViewModel viewModel = new CategoryEditViewModel(categoryEditDTO);
+            CategoryEditView view = new CategoryEditView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            viewModel.CategorySaveRequest += (s, e) =>
+            {
+                using (ICategoryController controller = factory.CreateCategoryController())
+                {
+                    ControllerMessage controllerMessage = controller.Update(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        //TODO
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
 
             window.Show();
         }

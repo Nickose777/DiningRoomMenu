@@ -55,6 +55,7 @@
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="DTO\Category\CategoryDisplayDTO.cs" />
+    <Compile Include="DTO\Category\CategoryEditDTO.cs" />
     <Compile Include="DTO\Dish\DishAddDTO.cs" />
     <Compile Include="DTO\Dish\DishDisplayDTO.cs" />
     <Compile Include="DTO\Ingredient\IngredientDisplayDTO.cs" />
