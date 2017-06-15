@@ -4,12 +4,15 @@ using DiningRoomMenu.Controls.DishControls.ViewModels;
 using DiningRoomMenu.Controls.DishControls.Views;
 using DiningRoomMenu.Controls.IngredientControls.ViewModels;
 using DiningRoomMenu.Controls.IngredientControls.Views;
+using DiningRoomMenu.Controls.MenuControls.ViewModels;
+using DiningRoomMenu.Controls.MenuControls.Views;
 using DiningRoomMenu.Controls.RecipeControls.ViewModels;
 using DiningRoomMenu.Controls.RecipeControls.Views;
 using DiningRoomMenu.Controls.StockControls.ViewModels;
 using DiningRoomMenu.Controls.StockControls.Views;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
+using DiningRoomMenu.Logic.DTO;
 using DiningRoomMenu.Logic.DTO.Category;
 using DiningRoomMenu.Logic.DTO.Dish;
 using DiningRoomMenu.Logic.DTO.Ingredient;
@@ -458,6 +461,31 @@ namespace DiningRoomMenu
         {
             RecipeListViewModel viewModel = new RecipeListViewModel(recipes);
             RecipeListView view = new RecipeListView(viewModel);
+            Window window = WindowFactory.CreateByContentsSize(view);
+
+            window.Show();
+        }
+
+        private void DisplayMenu_Click(object sender, RoutedEventArgs e)
+        {
+            using (IMenuController controller = factory.CreateMenuController())
+            {
+                DataControllerMessage<MenuDTO> controllerMessage = controller.GetMenu();
+                if (controllerMessage.IsSuccess)
+                {
+                    DisplayMenu(controllerMessage.Data);
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void DisplayMenu(MenuDTO menuDTO)
+        {
+            MenuViewModel viewModel = new MenuViewModel(menuDTO);
+            MenuView view = new MenuView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();

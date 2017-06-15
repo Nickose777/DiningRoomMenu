@@ -6,6 +6,7 @@ using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.Infrastructure;
 using System.Collections.Generic;
 using DiningRoomMenu.Logic.DTO.Category;
+using DiningRoomMenu.Logic.DTO.Dish;
 
 namespace DiningRoomMenu.Logic.Controllers
 {
@@ -84,9 +85,14 @@ namespace DiningRoomMenu.Logic.Controllers
                     OldName = categoryEntity.Name
                 };
 
-                foreach (string dishName in categoryEntity.Dishes.Select(dish => dish.Name))
+                foreach (DishEntity dishEntity in categoryEntity.Dishes)
                 {
-                    data.Dishes.Add(dishName);
+                    data.Dishes.Add(new DishDisplayDTO
+                    {
+                        CategoryName = categoryEntity.Name,
+                        Name = dishEntity.Name,
+                        Price = dishEntity.Price
+                    });
                 }
             }
             catch (Exception ex)

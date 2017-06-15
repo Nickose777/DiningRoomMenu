@@ -43,6 +43,7 @@
     <Compile Include="Contracts\Controllers\IConnectionController.cs" />
     <Compile Include="Contracts\Controllers\IDishController.cs" />
     <Compile Include="Contracts\Controllers\IIngredientController.cs" />
+    <Compile Include="Contracts\Controllers\IMenuController.cs" />
     <Compile Include="Contracts\Controllers\IRecipeController.cs" />
     <Compile Include="Contracts\Controllers\IStockController.cs" />
     <Compile Include="Contracts\IControllerFactory.cs" />
@@ -52,14 +53,18 @@
     <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\DishController.cs" />
     <Compile Include="Controllers\IngredientController.cs" />
+    <Compile Include="Controllers\MenuController.cs" />
     <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Controllers\StockController.cs" />
     <Compile Include="DTO\Category\CategoryDisplayDTO.cs" />
     <Compile Include="DTO\Category\CategoryEditDTO.cs" />
+    <Compile Include="DTO\Category\CategoryMenuDTO.cs" />
     <Compile Include="DTO\Dish\DishAddDTO.cs" />
     <Compile Include="DTO\Dish\DishDisplayDTO.cs" />
     <Compile Include="DTO\Dish\DishEditDTO.cs" />
+    <Compile Include="DTO\Dish\DishMenuDTO.cs" />
     <Compile Include="DTO\Ingredient\IngredientDisplayDTO.cs" />
+    <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\Recipe\IngredientPortion.cs" />
     <Compile Include="DTO\Recipe\RecipeAddDTO.cs" />
     <Compile Include="DTO\Recipe\RecipeDisplayDTO.cs" />

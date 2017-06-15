@@ -26,7 +26,7 @@ namespace DiningRoomMenu.Controls.CategoryControls.ViewModels
                 obj => CanSave());
             this.DeleteCommand = new DelegateCommand(() => RaiseCategoryDeleteRequestEvent(category));
 
-            this.Dishes = new ObservableCollection<string>(category.Dishes);
+            this.Dishes = new ObservableCollection<string>(category.Dishes.Select(d => d.Name));
         }
 
         public ICommand SaveCommand { get; private set; }

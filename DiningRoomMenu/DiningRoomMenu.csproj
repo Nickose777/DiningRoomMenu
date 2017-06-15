@@ -105,6 +105,10 @@
     <Compile Include="Controls\IngredientControls\Views\IngredientListView.xaml.cs">
       <DependentUpon>IngredientListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MenuControls\ViewModels\MenuViewModel.cs" />
+    <Compile Include="Controls\MenuControls\Views\MenuView.xaml.cs">
+      <DependentUpon>MenuView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\RecipeControls\ViewModels\RecipeAddViewModel.cs" />
     <Compile Include="Controls\RecipeControls\ViewModels\RecipeListViewModel.cs" />
     <Compile Include="Controls\RecipeControls\Views\RecipeAddView.xaml.cs">
@@ -155,6 +159,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\IngredientControls\Views\IngredientListView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MenuControls\Views\MenuView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

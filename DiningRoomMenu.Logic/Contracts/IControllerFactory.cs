@@ -15,5 +15,7 @@ namespace DiningRoomMenu.Logic.Contracts
         IDishController CreateDishController();
 
         IRecipeController CreateRecipeController();
+
+        IMenuController CreateMenuController();
     }
 }
