@@ -6,18 +6,27 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" Text="{Binding StockNo, StringFormat='Stock №{0}'}" />
-        <DataGrid AutoGenerateColumns="False" ItemsSource="{Binding IngredientCount}">
+
+        <TextBlock Grid.Row="0" Text="Stock №" />
+        <TextBlock Grid.Row="1" Text="Ingredients:" />
+
+        <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding StockNo, UpdateSourceTrigger=PropertyChanged}" />
+        <DataGrid Grid.Column="1" Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding IngredientCount}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient}" />
                 <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
             </DataGrid.Columns>
         </DataGrid>
+        <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Content="Save" Command="{Binding SaveCommand}" />
+        <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Right" Content="Delete" Command="{Binding DeleteCommand}" />
     </Grid>
 </UserControl>

@@ -17,7 +17,7 @@ namespace DiningRoomMenu.Logic.Controllers
         public ControllerMessage Add(int stockNo)
         {
             string message = String.Empty;
-            bool success = Validate(stockNo, ref message);
+            bool success = Validate(stockNo, ref message, true);
 
             if (success)
             {
@@ -52,6 +52,40 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Update(StockEditDTO stockEditDTO)
+        {
+            string message = String.Empty;
+            bool success = Validate(stockEditDTO.NewStockNo, ref message, stockEditDTO.OldStockNo != stockEditDTO.NewStockNo);
+
+            if (success)
+            {
+                try
+                {
+                    StockEntity stockEntity = unitOfWork.Stocks.GetByNo(stockEditDTO.OldStockNo);
+                    stockEntity.StockNo = stockEditDTO.NewStockNo;
+
+                    foreach (StockIngredientEntity stockIngredientEntity in stockEntity.StockIngredients)
+                    {
+                        int count = stockEditDTO.IngredientCount
+                            .Single(ingredient => ingredient.Ingredient == stockIngredientEntity.Ingredient.Name)
+                            .Count;
+                        stockIngredientEntity.Count = count >= 0 ? count : 0;
+                    }
+
+                    unitOfWork.Commit();
+
+                    message = "Stock changed";
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+                }
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<StockEditDTO> Get(int stockNo)
         {
             string message = String.Empty;
@@ -65,7 +99,8 @@ namespace DiningRoomMenu.Logic.Controllers
                 {
                     data = new StockEditDTO
                     {
-                        StockNo = stockNo
+                        OldStockNo = stockNo,
+                        NewStockNo = stockNo
                     };
                     foreach (StockIngredientEntity stockIngredientEntity in stockEntity.StockIngredients)
                     {
@@ -113,7 +148,7 @@ namespace DiningRoomMenu.Logic.Controllers
             return new DataControllerMessage<IEnumerable<StockDisplayDTO>>(success, message, data);
         }
 
-        private bool Validate(int stockNo, ref string message)
+        private bool Validate(int stockNo, ref string message, bool checkForStockNo)
         {
             bool isValid = true;
 
@@ -122,7 +157,7 @@ namespace DiningRoomMenu.Logic.Controllers
                 isValid = false;
                 message = "Stock's number cannot be negative";
             }
-            else if (unitOfWork.Stocks.GetAll().Any(stock => stock.StockNo == stockNo))
+            else if (checkForStockNo && unitOfWork.Stocks.GetAll().Any(stock => stock.StockNo == stockNo))
             {
                 isValid = false;
                 message = "Stock with such number already exists";

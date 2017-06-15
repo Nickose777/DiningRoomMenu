@@ -136,6 +136,22 @@ namespace DiningRoomMenu
             StockEditView view = new StockEditView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
+            viewModel.StockSaveRequest += (s, e) =>
+            {
+                using (IStockController controller = factory.CreateStockController())
+                {
+                    ControllerMessage controllerMessage = controller.Update(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        //TODO
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
             window.Show();
         }
 
