@@ -27,11 +27,13 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
         private DishDisplayDTO dish;
         private IngredientPortion ingredientPortion;
         private string portion;
+        private bool mustSelectDish;
 
         public RecipeAddViewModel(IControllerFactory factory, IDishSubject subject, IngredientListViewModel ingredientsViewModel)
         {
             this.factory = factory;
             this.recipe = new RecipeAddDTO();
+            this.MustSelectDish = true;
 
             this.SaveCommand = new DelegateCommand(Save, CanSave);
             this.RemoveCommand = new DelegateCommand(
@@ -112,6 +114,16 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
             }
         }
 
+        public bool MustSelectDish
+        {
+            get { return mustSelectDish; }
+            set
+            {
+                mustSelectDish = value;
+                RaisePropertyChangedEvent("MustSelectDish");
+            }
+        }
+
         public DishDisplayDTO Dish
         {
             get { return dish; }
@@ -138,7 +150,7 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
 
         private void Save()
         {
-            recipe.DishName = Dish.Name;
+            recipe.DishName = Dish != null ? Dish.Name : String.Empty;
             recipe.Ingredients.AddRange(Ingredients);
 
             RaiseRecipeAddedEvent(recipe);
@@ -147,7 +159,7 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
         private bool CanSave(object obj)
         {
             return
-                Dish != null &&
+                (Dish != null || !MustSelectDish) &&
                 !String.IsNullOrEmpty(Name);
         }
 

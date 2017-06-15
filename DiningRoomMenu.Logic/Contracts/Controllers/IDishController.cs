@@ -14,6 +14,8 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
 
         ControllerMessage Update(DishEditDTO dishEditDTO);
 
+        ControllerMessage UpdateRecipes(DishEditDTO dishEditDTO);
+
         DataControllerMessage<DishEditDTO> Get(string dishName);
 
         DataControllerMessage<IEnumerable<DishDisplayDTO>> GetAll();

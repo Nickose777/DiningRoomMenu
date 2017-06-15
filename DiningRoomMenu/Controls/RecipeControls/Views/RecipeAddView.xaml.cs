@@ -8,6 +8,11 @@ namespace DiningRoomMenu.Controls.RecipeControls.Views
     /// </summary>
     public partial class RecipeAddView : UserControl
     {
+        public RecipeAddView()
+        {
+            InitializeComponent();
+        }
+
         public RecipeAddView(RecipeAddViewModel viewModel)
         {
             InitializeComponent();

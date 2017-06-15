@@ -16,11 +16,11 @@ namespace DiningRoomMenu.Logic.DTO.Dish
 
         public string CategoryName { get; set; }
 
-        public List<string> Recipes { get; set; }
+        public List<DishRecipeEditDTO> Recipes { get; set; }
 
         public DishEditDTO()
         {
-            Recipes = new List<string>();
+            Recipes = new List<DishRecipeEditDTO>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using DiningRoomMenu.Data.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Dish;
+using DiningRoomMenu.Logic.DTO.Recipe;
 using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -83,6 +84,64 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage UpdateRecipes(DishEditDTO dishEditDTO)
+        {
+            string message = String.Empty;
+            bool success = Validate(dishEditDTO, ref message);
+
+            if (success)
+            {
+                try
+                {
+                    DishEntity dishEntity = unitOfWork.Dishes.Get(dishEditDTO.OldName);
+
+                    IEnumerable<string> added = dishEditDTO.Recipes
+                        .Select(recipe => recipe.Name)
+                        .Where(recipeName => !dishEntity.Recipes.Select(recipe => recipe.Name).Contains(recipeName));
+                    IEnumerable<string> deleted = dishEntity.Recipes
+                        .Select(recipe => recipe.Name)
+                        .Where(recipeName => !dishEditDTO.Recipes.Select(recipe => recipe.Name).Contains(recipeName))
+                        .ToList();
+
+                    foreach (DishRecipeEditDTO recipe in dishEditDTO.Recipes.Where(recipe => added.Contains(recipe.Name)))
+                    {
+                        if (!unitOfWork.Recipes.Exists(recipe.Name))
+                        {
+                            RecipeEntity recipeEntity = new RecipeEntity
+                            {
+                                Name = recipe.Name,
+                                Description = recipe.Description,
+                                Dish = dishEntity,
+                                RecipeIngredients = recipe.Ingredients.Select(ingredient => new RecipeIngredientEntity
+                                {
+                                    Portion = ingredient.Portion,
+                                    Ingredient = unitOfWork.Ingredients.Get(ingredient.Ingredient)
+                                })
+                                .ToList()
+                            };
+                            unitOfWork.Recipes.Add(recipeEntity);
+                        }
+                    }
+                    foreach (string recipeName in deleted)
+                    {
+                        RecipeEntity recipeEntity = dishEntity.Recipes.Single(recipe => recipe.Name == recipeName);
+                        unitOfWork.Recipes.Remove(recipeEntity);
+                    }
+
+                    unitOfWork.Commit();
+
+                    message = "Dish's recipes changed";
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+                }
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<DishEditDTO> Get(string dishName)
         {
             string message = String.Empty;
@@ -104,7 +163,22 @@ namespace DiningRoomMenu.Logic.Controllers
 
                     foreach (RecipeEntity recipeEntity in dishEntity.Recipes)
                     {
-                        data.Recipes.Add(recipeEntity.Name);
+                        DishRecipeEditDTO dishRecipe = new DishRecipeEditDTO
+                        {
+                            Name = recipeEntity.Name,
+                            Description = recipeEntity.Description
+                        };
+
+                        var ingredients = recipeEntity.RecipeIngredients.Select(ri => new IngredientPortion
+                            {
+                                Ingredient = ri.Ingredient.Name,
+                                Portion = ri.Portion
+                            })
+                            .OrderBy(ingredient => ingredient.Ingredient);
+                        dishRecipe.Ingredients.AddRange(ingredients);
+
+                        data.Recipes.Add(dishRecipe);
+
                     }
                 }
                 else

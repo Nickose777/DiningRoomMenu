@@ -3,6 +3,8 @@ using DiningRoomMenu.Contracts.Subjects;
 using DiningRoomMenu.Contracts.ViewControllers;
 using DiningRoomMenu.Controls.DishControls.ViewModels;
 using DiningRoomMenu.Controls.DishControls.Views;
+using DiningRoomMenu.Controls.IngredientControls.ViewModels;
+using DiningRoomMenu.Controls.RecipeControls.ViewModels;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Dish;
@@ -31,13 +33,13 @@ namespace DiningRoomMenu.ViewControllers
             return view;
         }
 
-        public UIElement GetListView()
+        public UIElement GetListView(IIngredientSubject subject)
         {
             DishListViewModel viewModel = new DishListViewModel(factory, this);
             DishListView view = new DishListView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
-            viewModel.DishSelected += (s, e) => OnSelected(e.Data);
+            viewModel.DishSelected += (s, e) => OnSelected(e.Data, subject);
 
             return view;
         }
@@ -61,14 +63,14 @@ namespace DiningRoomMenu.ViewControllers
             }
         }
 
-        private void OnSelected(DishDisplayDTO dishDisplayDTO)
+        private void OnSelected(DishDisplayDTO dishDisplayDTO, IIngredientSubject subject)
         {
             using (IDishController controller = factory.CreateDishController())
             {
                 DataControllerMessage<DishEditDTO> controllerMessage = controller.Get(dishDisplayDTO.Name);
                 if (controllerMessage.IsSuccess)
                 {
-                    Edit(controllerMessage.Data);
+                    Edit(controllerMessage.Data, subject);
                 }
                 else
                 {
@@ -77,9 +79,13 @@ namespace DiningRoomMenu.ViewControllers
             }
         }
 
-        private void Edit(DishEditDTO dishEditDTO)
+        private void Edit(DishEditDTO dishEditDTO, IIngredientSubject subject)
         {
-            DishEditViewModel viewModel = new DishEditViewModel(dishEditDTO);
+            IngredientListViewModel ingredientListViewModel = new IngredientListViewModel(factory, subject);
+            RecipeAddViewModel recipeAddViewModel = new RecipeAddViewModel(factory, this, ingredientListViewModel);
+            recipeAddViewModel.MustSelectDish = false;
+
+            DishEditViewModel viewModel = new DishEditViewModel(dishEditDTO, recipeAddViewModel);
             DishEditView view = new DishEditView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
 
@@ -88,6 +94,21 @@ namespace DiningRoomMenu.ViewControllers
                 using (IDishController controller = factory.CreateDishController())
                 {
                     ControllerMessage controllerMessage = controller.Update(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        Notify();
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+            viewModel.DishSaveRecipesRequest += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.UpdateRecipes(e.Data);
                     if (controllerMessage.IsSuccess)
                     {
                         Notify();
