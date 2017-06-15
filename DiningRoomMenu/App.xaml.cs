@@ -1,6 +1,7 @@
 ﻿using System.Windows;
 using DiningRoomMenu.Logic;
 using DiningRoomMenu.Logic.Contracts;
+using DiningRoomMenu.Contracts;
 
 namespace DiningRoomMenu
 {
@@ -12,8 +13,9 @@ namespace DiningRoomMenu
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             IControllerFactory factory = Factory.CreateFactory();
+            IViewControllerFactory viewFactory = new ViewControllerFactory(factory);
 
-            MainWindow mainWindow = new MainWindow(factory);
+            MainWindow mainWindow = new MainWindow(viewFactory);
 
             this.ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
             this.MainWindow = mainWindow;

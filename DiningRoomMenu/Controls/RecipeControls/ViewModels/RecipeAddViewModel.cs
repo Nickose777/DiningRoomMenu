@@ -1,7 +1,13 @@
-﻿using DiningRoomMenu.Controls.IngredientControls.ViewModels;
+﻿using DiningRoomMenu.Contracts;
+using DiningRoomMenu.Contracts.Subjects;
+using DiningRoomMenu.Controls.IngredientControls.ViewModels;
 using DiningRoomMenu.EventHandlers;
+using DiningRoomMenu.Logic.Contracts;
+using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Dish;
+using DiningRoomMenu.Logic.DTO.Ingredient;
 using DiningRoomMenu.Logic.DTO.Recipe;
+using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,18 +18,19 @@ using System.Windows.Input;
 
 namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
 {
-    public class RecipeAddViewModel : ObservableObject
+    public class RecipeAddViewModel : ObservableObject, IObserver
     {
         public event GenericEventHandler<RecipeAddDTO> RecipeAdded;
 
+        private readonly IControllerFactory factory;
         private RecipeAddDTO recipe;
-
         private DishDisplayDTO dish;
         private IngredientPortion ingredientPortion;
         private string portion;
 
-        public RecipeAddViewModel(IEnumerable<DishDisplayDTO> dishes, IngredientListViewModel ingredientsViewModel)
+        public RecipeAddViewModel(IControllerFactory factory, IDishSubject subject, IngredientListViewModel ingredientsViewModel)
         {
+            this.factory = factory;
             this.recipe = new RecipeAddDTO();
 
             this.SaveCommand = new DelegateCommand(Save, CanSave);
@@ -33,7 +40,7 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
 
             this.IngredientsViewModel = ingredientsViewModel;
 
-            this.Dishes = new ObservableCollection<DishDisplayDTO>(dishes);
+            this.Dishes = new ObservableCollection<DishDisplayDTO>();
             this.Ingredients = new ObservableCollection<IngredientPortion>();
 
             ingredientsViewModel.IngredientSelected += (s, e) =>
@@ -46,6 +53,27 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
 
                 Portion = String.Empty;
             };
+
+            subject.Subscribe(this);
+            Update();
+        }
+
+        public void Update()
+        {
+            Dishes.Clear();
+
+            using (IDishController controller = factory.CreateDishController())
+            {
+                DataControllerMessage<IEnumerable<DishDisplayDTO>> controllerMessage = controller.GetAll();
+
+                if (controllerMessage.IsSuccess)
+                {
+                    foreach (DishDisplayDTO dish in controllerMessage.Data)
+                    {
+                        Dishes.Add(dish);
+                    }
+                }
+            }
         }
 
         public ICommand SaveCommand { get; private set; }

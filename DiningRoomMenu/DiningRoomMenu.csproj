@@ -77,6 +77,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Contracts\IObserver.cs" />
+    <Compile Include="Contracts\IViewControllerFactory.cs" />
+    <Compile Include="Contracts\Subjects\ICategorySubject.cs" />
+    <Compile Include="Contracts\Subjects\IDishSubject.cs" />
+    <Compile Include="Contracts\Subjects\IIngredientSubject.cs" />
+    <Compile Include="Contracts\Subjects\IMenuSubject.cs" />
+    <Compile Include="Contracts\Subjects\IRecipeSubject.cs" />
+    <Compile Include="Contracts\Subjects\IStockSubject.cs" />
+    <Compile Include="Contracts\ViewControllers\ICategoryViewController.cs" />
+    <Compile Include="Contracts\ViewControllers\IDishViewController.cs" />
+    <Compile Include="Contracts\ViewControllers\IIngredientViewController.cs" />
+    <Compile Include="Contracts\ViewControllers\IMenuViewController.cs" />
+    <Compile Include="Contracts\ViewControllers\IRecipeViewController.cs" />
+    <Compile Include="Contracts\ViewControllers\IStockViewController.cs" />
     <Compile Include="Controls\CategoryControls\ViewModels\CategoryEditViewModel.cs" />
     <Compile Include="Controls\CategoryControls\ViewModels\CategoryListViewModel.cs" />
     <Compile Include="Controls\CategoryControls\Views\CategoryEditView.xaml.cs">
@@ -129,6 +143,14 @@
     <Compile Include="Controls\StockControls\Views\StockListView.xaml.cs">
       <DependentUpon>StockListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewControllerFactory.cs" />
+    <Compile Include="ViewControllers\CategoryViewController.cs" />
+    <Compile Include="ViewControllers\DishViewController.cs" />
+    <Compile Include="ViewControllers\IngredientViewController.cs" />
+    <Compile Include="ViewControllers\MenuViewController.cs" />
+    <Compile Include="ViewControllers\RecipeViewController.cs" />
+    <Compile Include="ViewControllers\StockViewController.cs" />
+    <Compile Include="ViewControllers\ViewControllerBase.cs" />
     <Compile Include="WindowFactory.cs" />
     <Page Include="Controls\CategoryControls\Views\CategoryAddView.xaml">
       <SubType>Designer</SubType>

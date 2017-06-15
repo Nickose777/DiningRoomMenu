@@ -1,5 +1,10 @@
-﻿using DiningRoomMenu.EventHandlers;
+﻿using DiningRoomMenu.Contracts;
+using DiningRoomMenu.Contracts.Subjects;
+using DiningRoomMenu.EventHandlers;
+using DiningRoomMenu.Logic.Contracts;
+using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Category;
+using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,19 +15,43 @@ using System.Windows.Input;
 
 namespace DiningRoomMenu.Controls.CategoryControls.ViewModels
 {
-    public class CategoryListViewModel : ObservableObject
+    public class CategoryListViewModel : ObservableObject, IObserver
     {
         public event GenericEventHandler<CategoryDisplayDTO> CategorySelected;
 
+        private readonly IControllerFactory factory;
         private CategoryDisplayDTO category;
 
-        public CategoryListViewModel(IEnumerable<CategoryDisplayDTO> categories)
+        public CategoryListViewModel(IControllerFactory factory, ICategorySubject subject)
         {
+            this.factory = factory;
+            subject.Subscribe(this);
+
             this.SelectCommand = new DelegateCommand(
                 () => RaiseCategorySelectedEvent(Category),
                 obj => Category != null);
 
-            this.Categories = new ObservableCollection<CategoryDisplayDTO>(categories);
+            this.Categories = new ObservableCollection<CategoryDisplayDTO>();
+
+            Update();
+        }
+
+        public void Update()
+        {
+            Categories.Clear();
+
+            using (ICategoryController controller = factory.CreateCategoryController())
+            {
+                DataControllerMessage<IEnumerable<CategoryDisplayDTO>> controllerMessage = controller.GetAll();
+
+                if (controllerMessage.IsSuccess)
+                {
+                    foreach (CategoryDisplayDTO category in controllerMessage.Data)
+                    {
+                        Categories.Add(category);
+                    }
+                }
+            }
         }
 
         public ICommand SelectCommand { get; private set; }
