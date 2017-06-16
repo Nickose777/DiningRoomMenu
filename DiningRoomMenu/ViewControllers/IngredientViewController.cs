@@ -41,6 +41,8 @@ namespace DiningRoomMenu.ViewControllers
             IngredientEditViewModel viewModel = new IngredientEditViewModel(factory, listViewModel);
             IngredientEditView view = new IngredientEditView(viewModel);
 
+            viewModel.IngredientSaveRequest += (s, e) => OnSave(e.Data);
+
             return view;
         }
 
@@ -58,6 +60,24 @@ namespace DiningRoomMenu.ViewControllers
                 if (controllerMessage.IsSuccess)
                 {
                     viewModel.Name = String.Empty;
+                    Notify();
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void OnSave(IngredientEditDTO ingredientEditDTO)
+        {
+            using (IIngredientController controller = factory.CreateIngredientController())
+            {
+                ControllerMessage controllerMessage = controller.Update(ingredientEditDTO);
+
+                if (controllerMessage.IsSuccess)
+                {
+                    Notify();
                 }
                 else
                 {

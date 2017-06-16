@@ -53,6 +53,39 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Update(IngredientEditDTO ingredientEditDTO)
+        {
+            string message = String.Empty;
+            bool success = Validate(ingredientEditDTO.NewName, ref message);
+
+            if (success)
+            {
+                try
+                {
+                    IngredientEntity ingredientEntity = unitOfWork.Ingredients.Get(ingredientEditDTO.OldName);
+                    if (ingredientEntity != null)
+                    {
+                        ingredientEntity.Name = ingredientEditDTO.NewName;
+                        unitOfWork.Commit();
+
+                        message = "Ingredient changed";
+                    }
+                    else
+                    {
+                        success = false;
+                        message = "Ingredient not found";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    success = false;
+                    message = ExceptionMessageBuilder.BuildMessage(ex);
+                }
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<IngredientEditDTO> Get(string ingredientName)
         {
             string message = String.Empty;
