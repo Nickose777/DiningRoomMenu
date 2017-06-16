@@ -11,5 +11,7 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     public interface IMenuController : IDisposable
     {
         DataControllerMessage<MenuDTO> GetMenu();
+
+        ControllerMessage UpdateMenu(MenuDTO menu);
     }
 }

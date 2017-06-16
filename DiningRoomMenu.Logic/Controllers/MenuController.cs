@@ -55,5 +55,42 @@ namespace DiningRoomMenu.Logic.Controllers
 
             return new DataControllerMessage<MenuDTO>(success, message, data);
         }
+
+        public ControllerMessage UpdateMenu(MenuDTO menu)
+        {
+            string message = String.Empty;
+            bool success = true;
+
+            try
+            {
+                foreach (CategoryMenuDTO categoryDTO in menu.Categories.Where(category => category.OldName != category.NewName))
+                {
+                    CategoryEntity categoryEntity = unitOfWork.Categories.Get(categoryDTO.OldName);
+                    if (categoryEntity != null)
+                    {
+                        categoryEntity.Name = categoryDTO.NewName;
+                    }
+                }
+                foreach (DishMenuDTO dishDTO in menu.Categories.SelectMany(category => category.Dishes))
+                {
+                    DishEntity dishEntity = unitOfWork.Dishes.Get(dishDTO.OldName);
+                    if (dishEntity != null)
+                    {
+                        dishEntity.Name = dishDTO.NewName;
+                        dishEntity.Price = dishDTO.Price;
+                    }
+                }
+
+                unitOfWork.Commit();
+                message = "Saved changes";
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new ControllerMessage(success, message);
+        }
     }
 }
