@@ -18,9 +18,9 @@ namespace DiningRoomMenu.ViewControllers
         public MenuViewController(IControllerFactory factory)
             : base(factory) { }
 
-        public UIElement GetMenuView(ICategorySubject categorySubject, IDishSubject dishSubject)
+        public UIElement GetMenuView()
         {
-            MenuViewModel viewModel = new MenuViewModel(factory, categorySubject, dishSubject);
+            MenuViewModel viewModel = new MenuViewModel(factory, this);
             MenuView view = new MenuView(viewModel);
 
             return view;

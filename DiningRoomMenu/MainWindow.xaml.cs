@@ -30,10 +30,8 @@ namespace DiningRoomMenu
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, IObserver
     {
-        private IControllerFactory factory_TEMP;
-
         private readonly ICategoryViewController categoryViewController;
         private readonly IDishViewController dishViewController;
         private readonly IIngredientViewController ingredientViewController;
@@ -51,6 +49,14 @@ namespace DiningRoomMenu
             this.menuViewController = factory.CreateMenuViewController();
             this.recipeViewController = factory.CreateRecipeViewController();
             this.stockViewController = factory.CreateStockViewController();
+
+            categoryViewController.Subscribe(this);
+            dishViewController.Subscribe(this);
+        }
+
+        public void Update()
+        {
+            menuViewController.Notify();
         }
 
         private void AddCategory_Click(object sender, RoutedEventArgs e)
@@ -135,7 +141,7 @@ namespace DiningRoomMenu
 
         private void DisplayMenu_Click(object sender, RoutedEventArgs e)
         {
-            UIElement view = menuViewController.GetMenuView(categoryViewController, dishViewController);
+            UIElement view = menuViewController.GetMenuView();
             Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();

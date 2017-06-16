@@ -18,14 +18,13 @@ namespace DiningRoomMenu.Controls.MenuControls.ViewModels
     {
         private readonly IControllerFactory factory;
 
-        public MenuViewModel(IControllerFactory factory, ICategorySubject categorySubject, IDishSubject dishSubject)
+        public MenuViewModel(IControllerFactory factory, IMenuSubject subject)
         {
             this.factory = factory;
 
             this.Categories = new ObservableCollection<CategoryMenuDTO>();
 
-            categorySubject.Subscribe(this);
-            dishSubject.Subscribe(this);
+            subject.Subscribe(this);
             Update();
         }
 
