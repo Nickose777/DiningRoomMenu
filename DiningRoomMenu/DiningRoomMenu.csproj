@@ -77,6 +77,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AddControlPanel.xaml.cs">
+      <DependentUpon>AddControlPanel.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Contracts\IObserver.cs" />
     <Compile Include="Contracts\IViewControllerFactory.cs" />
     <Compile Include="Contracts\Subjects\ICategorySubject.cs" />
@@ -143,6 +146,12 @@
     <Compile Include="Controls\StockControls\Views\StockListView.xaml.cs">
       <DependentUpon>StockListView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LogoControl.xaml.cs">
+      <DependentUpon>LogoControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="MenuWindow.xaml.cs">
+      <DependentUpon>MenuWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewControllerFactory.cs" />
     <Compile Include="ViewControllers\CategoryViewController.cs" />
     <Compile Include="ViewControllers\DishViewController.cs" />
@@ -152,6 +161,10 @@
     <Compile Include="ViewControllers\StockViewController.cs" />
     <Compile Include="ViewControllers\ViewControllerBase.cs" />
     <Compile Include="WindowFactory.cs" />
+    <Page Include="AddControlPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\CategoryControls\Views\CategoryAddView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -208,6 +221,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="LogoControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -227,6 +244,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="MenuWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ObservableObject.cs" />

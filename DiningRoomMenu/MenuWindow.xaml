@@ -1,0 +1,19 @@
+﻿<Window x:Class="DiningRoomMenu.MenuWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:DiningRoomMenu"
+        Title="MenuWindow" Height="300" Width="300">
+    <Grid Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        
+        <StackPanel Grid.Column="0">
+            <local:LogoControl />
+            <Button Content="Menu" Click="DisplayMenu_Click" />
+            <Button Content="Ingredients" Click="DisplayIngredients_Click" />
+            <Button Content="Stocks" Click="DisplayStocks_Click" />
+        </StackPanel>
+    </Grid>
+</Window>
