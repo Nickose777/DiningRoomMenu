@@ -19,6 +19,7 @@ namespace DiningRoomMenu.Controls.MenuControls.ViewModels
     public class MenuViewModel : ObservableObject, IObserver
     {
         public event GenericEventHandler<MenuDTO> MenuChanged;
+        public event GenericEventHandler<string> DishSelected;
 
         private readonly IControllerFactory factory;
 
@@ -29,6 +30,8 @@ namespace DiningRoomMenu.Controls.MenuControls.ViewModels
             this.SaveCommand = new DelegateCommand(
                 () => Save(),
                 obj => CanSave());
+            this.SelectDishCommand = new DelegateCommand(
+                SelectDish, obj => true);
 
             this.Categories = new ObservableCollection<CategoryMenuDTO>();
 
@@ -55,6 +58,8 @@ namespace DiningRoomMenu.Controls.MenuControls.ViewModels
 
         public ICommand SaveCommand { get; set; }
 
+        public ICommand SelectDishCommand { get; set; }
+
         public ObservableCollection<CategoryMenuDTO> Categories { get; private set; }
 
         private void Save()
@@ -70,6 +75,21 @@ namespace DiningRoomMenu.Controls.MenuControls.ViewModels
             return
                 Categories.All(category => !String.IsNullOrEmpty(category.NewName)) &&
                 Categories.All(category => category.Dishes.All(dish => !String.IsNullOrEmpty(dish.NewName)));
+        }
+
+        private void SelectDish(object parameter)
+        {
+            RaiseDishSelectedEvent(parameter.ToString());
+        }
+
+        private void RaiseDishSelectedEvent(string dishName)
+        {
+            var handler = DishSelected;
+            if (handler != null)
+            {
+                GenericEventArgs<string> e = new GenericEventArgs<string>(dishName);
+                handler(this, e);
+            }
         }
 
         private void RaiseMenuChangedEvent(MenuDTO menu)

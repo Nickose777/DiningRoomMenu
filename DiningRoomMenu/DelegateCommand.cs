@@ -12,6 +12,7 @@ namespace DiningRoomMenu
         }
 
         private readonly Action action;
+        private readonly Action<object> actionObj;
         private readonly Predicate<object> canExecute;
 
         public DelegateCommand(Action action)
@@ -26,6 +27,12 @@ namespace DiningRoomMenu
             this.canExecute = canExecute;
         }
 
+        public DelegateCommand(Action<object> action, Predicate<object> canExecute)
+        {
+            this.actionObj = action;
+            this.canExecute = canExecute;
+        }
+
         public bool CanExecute(object parameter)
         {
             return canExecute(parameter);
@@ -33,7 +40,14 @@ namespace DiningRoomMenu
 
         public void Execute(object parameter)
         {
-            action();
+            if (action != null)
+            {
+                action();
+            }
+            else if (actionObj != null)
+            {
+                actionObj(parameter);
+            }
         }
     }
 }

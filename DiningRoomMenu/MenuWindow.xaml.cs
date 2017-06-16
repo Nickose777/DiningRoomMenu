@@ -60,7 +60,7 @@ namespace DiningRoomMenu
         private void DisplayMenu()
         {
             AddControlPanel controlPanel = new AddControlPanel(categoryViewController, dishViewController);
-            UIElement view = menuViewController.GetMenuView();
+            UIElement view = menuViewController.GetMenuView(dishViewController, ingredientViewController);
 
             Grid grid = new Grid();
 

@@ -18,11 +18,38 @@
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
+                        
                         <TextBox Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" />
                         <ItemsControl Grid.Row="1" ItemsSource="{Binding Dishes}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <DockPanel LastChildFill="False">
+                                        <Button DockPanel.Dock="Left" Height="10" Width="10"
+                                                Command="{Binding Path=DataContext.SelectDishCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                                                CommandParameter="{Binding NewName}">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Grid>
+                                                        <Ellipse Stroke="Black" StrokeThickness="2">
+                                                            <Ellipse.Fill>
+                                                                <RadialGradientBrush>
+                                                                    <GradientStop Offset="0" Color="Lime" />
+                                                                    <GradientStop Offset="1" Color="Lime" />
+                                                                    <GradientStop Offset="1" Color="Gold" />
+                                                                    <RadialGradientBrush.Transform>
+                                                                        <TransformGroup>
+                                                                            <ScaleTransform ScaleY="0.65" />
+                                                                        </TransformGroup>
+                                                                    </RadialGradientBrush.Transform>
+                                                                </RadialGradientBrush>
+                                                            </Ellipse.Fill>
+                                                        </Ellipse>
+                                                        <ContentPresenter HorizontalAlignment="Center"
+                                                                            VerticalAlignment="Center"/>
+                                                    </Grid>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
                                         <TextBox DockPanel.Dock="Left"  Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" />
                                         <TextBox DockPanel.Dock="Right" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
                                     </DockPanel>

@@ -63,6 +63,49 @@ namespace DiningRoomMenu.ViewControllers
             }
         }
 
+        public UIElement GetEditView(IIngredientSubject subject, DishEditDTO dishEditDTO)
+        {
+            IngredientListViewModel ingredientListViewModel = new IngredientListViewModel(factory, subject);
+            RecipeAddViewModel recipeAddViewModel = new RecipeAddViewModel(factory, this, ingredientListViewModel);
+            recipeAddViewModel.MustSelectDish = false;
+
+            DishEditViewModel viewModel = new DishEditViewModel(dishEditDTO, recipeAddViewModel);
+            DishEditView view = new DishEditView(viewModel);
+
+            viewModel.DishSaveRequest += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.Update(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        Notify();
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+            viewModel.DishSaveRecipesRequest += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.UpdateRecipes(e.Data);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        Notify();
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
+
+            return view;
+        }
+
         private void OnSelected(DishDisplayDTO dishDisplayDTO, IIngredientSubject subject)
         {
             using (IDishController controller = factory.CreateDishController())

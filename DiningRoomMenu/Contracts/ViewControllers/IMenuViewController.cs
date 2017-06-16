@@ -10,6 +10,6 @@ namespace DiningRoomMenu.Contracts.ViewControllers
 {
     public interface IMenuViewController : IMenuSubject
     {
-        UIElement GetMenuView();
+        UIElement GetMenuView(IDishViewController dishViewController, IIngredientSubject ingredientSubject);
     }
 }

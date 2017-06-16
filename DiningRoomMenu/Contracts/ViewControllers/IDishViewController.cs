@@ -1,4 +1,5 @@
 ﻿using DiningRoomMenu.Contracts.Subjects;
+using DiningRoomMenu.Logic.DTO.Dish;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,8 @@ namespace DiningRoomMenu.Contracts.ViewControllers
     public interface IDishViewController : IDishSubject
     {
         UIElement GetAddView(ICategorySubject subject);
+
+        UIElement GetEditView(IIngredientSubject subject, DishEditDTO dishEditDTO);
 
         UIElement GetListView(IIngredientSubject subject);
     }

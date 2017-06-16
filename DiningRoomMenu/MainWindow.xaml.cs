@@ -141,7 +141,7 @@ namespace DiningRoomMenu
 
         private void DisplayMenu_Click(object sender, RoutedEventArgs e)
         {
-            UIElement view = menuViewController.GetMenuView();
+            UIElement view = menuViewController.GetMenuView(dishViewController, ingredientViewController);
             Window window = WindowFactory.CreateByContentsSize(view);
 
             window.Show();
