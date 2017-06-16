@@ -154,6 +154,7 @@ namespace DiningRoomMenu.Controls.RecipeControls.ViewModels
             recipe.Ingredients.AddRange(Ingredients);
 
             RaiseRecipeAddedEvent(recipe);
+            recipe.Ingredients.Clear();
         }
 
         private bool CanSave(object obj)
