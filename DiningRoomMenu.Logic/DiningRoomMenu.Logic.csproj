@@ -65,6 +65,7 @@
     <Compile Include="DTO\Dish\DishMenuDTO.cs" />
     <Compile Include="DTO\Dish\DishRecipeEditDTO.cs" />
     <Compile Include="DTO\Ingredient\IngredientDisplayDTO.cs" />
+    <Compile Include="DTO\Ingredient\IngredientEditDTO.cs" />
     <Compile Include="DTO\MenuDTO.cs" />
     <Compile Include="DTO\Recipe\IngredientPortion.cs" />
     <Compile Include="DTO\Recipe\RecipeAddDTO.cs" />

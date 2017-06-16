@@ -1,4 +1,5 @@
-﻿using DiningRoomMenu.Core.Entities;
+﻿using System.Collections.Generic;
+using DiningRoomMenu.Core.Entities;
 
 namespace DiningRoomMenu.Data.Contracts.Repositories
 {

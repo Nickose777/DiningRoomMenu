@@ -12,6 +12,8 @@ namespace DiningRoomMenu.Contracts.ViewControllers
     {
         UIElement GetAddView();
 
+        UIElement GetEditView();
+
         UIElement GetListView();
     }
 }

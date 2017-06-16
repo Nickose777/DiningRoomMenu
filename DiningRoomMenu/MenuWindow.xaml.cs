@@ -63,6 +63,7 @@ namespace DiningRoomMenu
             UIElement view = menuViewController.GetMenuView();
 
             Grid grid = new Grid();
+
             ColumnDefinition c1 = new ColumnDefinition();
             ColumnDefinition c2 = new ColumnDefinition();
 
@@ -83,7 +84,45 @@ namespace DiningRoomMenu
 
         private void DisplayIngredients_Click(object sender, RoutedEventArgs e)
         {
+            UIElement viewAdd = ingredientViewController.GetAddView();
+            UIElement viewList = ingredientViewController.GetListView();
+            UIElement viewEdit = ingredientViewController.GetEditView();
 
+            Grid grid = new Grid();
+
+            ColumnDefinition c1 = new ColumnDefinition();
+            ColumnDefinition c2 = new ColumnDefinition();
+
+            RowDefinition r1 = new RowDefinition();
+            RowDefinition r2 = new RowDefinition();
+
+            c1.Width = new GridLength(2, GridUnitType.Star);
+            c2.Width = new GridLength(1, GridUnitType.Star);
+
+            r1.Height = new GridLength(1, GridUnitType.Star);
+            r2.Height = new GridLength(1, GridUnitType.Star);
+
+            grid.ColumnDefinitions.Add(c1);
+            grid.ColumnDefinitions.Add(c2);
+
+            grid.RowDefinitions.Add(r1);
+            grid.RowDefinitions.Add(r2);
+
+            Grid.SetColumn(viewAdd, 0);
+            Grid.SetRow(viewAdd, 0);
+
+            Grid.SetColumn(viewList, 1);
+            Grid.SetRow(viewList, 0);
+            Grid.SetRowSpan(viewList, 2);
+
+            Grid.SetColumn(viewEdit, 0);
+            Grid.SetRow(viewEdit, 1);
+
+            grid.Children.Add(viewAdd);
+            grid.Children.Add(viewList);
+            grid.Children.Add(viewEdit);
+
+            DisplayOnGrid(grid);
         }
 
         private void DisplayStocks_Click(object sender, RoutedEventArgs e)

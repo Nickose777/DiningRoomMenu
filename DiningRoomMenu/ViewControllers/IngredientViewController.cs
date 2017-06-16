@@ -18,8 +18,13 @@ namespace DiningRoomMenu.ViewControllers
 {
     class IngredientViewController : ViewControllerBase, IIngredientViewController
     {
+        private IngredientListViewModel listViewModel;
+
         public IngredientViewController(IControllerFactory factory)
-            : base(factory) { }
+            : base(factory)
+        {
+            listViewModel = new IngredientListViewModel(factory, this);
+        }
 
         public UIElement GetAddView()
         {
@@ -31,19 +36,17 @@ namespace DiningRoomMenu.ViewControllers
             return view;
         }
 
-        public UIElement GetListView()
+        public UIElement GetEditView()
         {
-            IngredientListViewModel viewModel = new IngredientListViewModel(factory, this);
-            IngredientListView view = new IngredientListView(viewModel);
-
-            viewModel.IngredientSelected += (s, e) => OnSelected(e.Data);
+            IngredientEditViewModel viewModel = new IngredientEditViewModel(factory, listViewModel);
+            IngredientEditView view = new IngredientEditView(viewModel);
 
             return view;
         }
 
-        private void OnSelected(IngredientDisplayDTO ingredientDisplayDTO)
+        public UIElement GetListView()
         {
-            MessageBox.Show("TODO");
+            return new IngredientListView(listViewModel);
         }
 
         private void OnAdd(string ingredientName, IngredientAddViewModel viewModel)

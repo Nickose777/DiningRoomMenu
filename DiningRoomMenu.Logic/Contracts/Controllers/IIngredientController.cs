@@ -12,6 +12,8 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
     {
         ControllerMessage Add(string ingredientName);
 
+        DataControllerMessage<IngredientEditDTO> Get(string ingredientName);
+
         DataControllerMessage<IEnumerable<IngredientDisplayDTO>> GetAll();
     }
 }
