@@ -42,6 +42,7 @@ namespace DiningRoomMenu.ViewControllers
             IngredientEditView view = new IngredientEditView(viewModel);
 
             viewModel.IngredientSaveRequest += (s, e) => OnSave(e.Data);
+            viewModel.IngredientDeleteRequest += (s, e) => OnDelete(e.Data, viewModel);
 
             return view;
         }
@@ -77,7 +78,26 @@ namespace DiningRoomMenu.ViewControllers
 
                 if (controllerMessage.IsSuccess)
                 {
+                    ingredientEditDTO.OldName = ingredientEditDTO.NewName;
                     Notify();
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void OnDelete(IngredientEditDTO ingredientEditDTO, IngredientEditViewModel viewModel)
+        {
+            using (IIngredientController controller = factory.CreateIngredientController())
+            {
+                ControllerMessage controllerMessage = controller.Delete(ingredientEditDTO.OldName);
+
+                if (controllerMessage.IsSuccess)
+                {
+                    Notify();
+                    viewModel.Clear();
                 }
                 else
                 {

@@ -86,6 +86,36 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Delete(string ingredientName)
+        {
+            string message = String.Empty;
+            bool success = true;
+
+            try
+            {
+                IngredientEntity ingredientEntity = unitOfWork.Ingredients.Get(ingredientName);
+                if (ingredientEntity != null)
+                {
+                    unitOfWork.Ingredients.Remove(ingredientEntity);
+                    unitOfWork.Commit();
+
+                    message = "Ingredient deleted";
+                }
+                else
+                {
+                    success = false;
+                    message = "Ingredient not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<IngredientEditDTO> Get(string ingredientName)
         {
             string message = String.Empty;

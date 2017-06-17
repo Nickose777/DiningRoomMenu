@@ -57,6 +57,12 @@ namespace DiningRoomMenu.Controls.IngredientControls.ViewModels
             }
         }
 
+        public void Clear()
+        {
+            this.ingredient = null;
+            RaisePropertyChangedEvent("Name");
+        }
+
         public ICommand SaveCommand { get; private set; }
 
         public ICommand DeleteCommand { get; private set; }

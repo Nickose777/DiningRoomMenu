@@ -14,6 +14,8 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
 
         ControllerMessage Update(IngredientEditDTO ingredientEditDTO);
 
+        ControllerMessage Delete(string ingredientName);
+
         DataControllerMessage<IngredientEditDTO> Get(string ingredientName);
 
         DataControllerMessage<IEnumerable<IngredientDisplayDTO>> GetAll();
