@@ -11,6 +11,8 @@ namespace DiningRoomMenu.Logic.Contracts.Controllers
 
         ControllerMessage Update(StockEditDTO stockEditDTO);
 
+        ControllerMessage Delete(int stockNo);
+
         DataControllerMessage<StockEditDTO> Get(int stockNo);
 
         DataControllerMessage<IEnumerable<StockDisplayDTO>> GetAll();

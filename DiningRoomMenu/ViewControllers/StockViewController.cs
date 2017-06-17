@@ -41,21 +41,8 @@ namespace DiningRoomMenu.ViewControllers
             StockEditViewModel viewModel = new StockEditViewModel(factory, listViewModel);
             StockEditView view = new StockEditView(viewModel);
 
-            viewModel.StockSaveRequest += (s, e) =>
-            {
-                using (IStockController controller = factory.CreateStockController())
-                {
-                    ControllerMessage controllerMessage = controller.Update(e.Data);
-                    if (controllerMessage.IsSuccess)
-                    {
-                        Notify();
-                    }
-                    else
-                    {
-                        MessageBox.Show(controllerMessage.Message);
-                    }
-                }
-            };
+            viewModel.StockSaveRequest += (s, e) => OnSave(e.Data);
+            viewModel.StockDeleteRequest += (s, e) => OnDelete(e.Data, viewModel);
 
             return view;
         }
@@ -76,6 +63,40 @@ namespace DiningRoomMenu.ViewControllers
                 {
                     viewModel.StockNo = String.Empty;
                     Notify();
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void OnSave(StockEditDTO stockEditDTO)
+        {
+            using (IStockController controller = factory.CreateStockController())
+            {
+                ControllerMessage controllerMessage = controller.Update(stockEditDTO);
+                if (controllerMessage.IsSuccess)
+                {
+                    stockEditDTO.OldStockNo = stockEditDTO.NewStockNo;
+                    Notify();
+                }
+                else
+                {
+                    MessageBox.Show(controllerMessage.Message);
+                }
+            }
+        }
+
+        private void OnDelete(StockEditDTO stockEditDTO, StockEditViewModel viewModel)
+        {
+            using (IStockController controller = factory.CreateStockController())
+            {
+                ControllerMessage controllerMessage = controller.Delete(stockEditDTO.OldStockNo);
+                if (controllerMessage.IsSuccess)
+                {
+                    Notify();
+                    viewModel.Clear();
                 }
                 else
                 {

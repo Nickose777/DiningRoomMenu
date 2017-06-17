@@ -86,6 +86,36 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Delete(int stockNo)
+        {
+            string message = String.Empty;
+            bool success = true;
+
+            try
+            {
+                StockEntity stockEntity = unitOfWork.Stocks.GetByNo(stockNo);
+                if (stockEntity != null)
+                {
+                    unitOfWork.Stocks.Remove(stockEntity);
+                    unitOfWork.Commit();
+
+                    message = "Stock deleted";
+                }
+                else
+                {
+                    success = false;
+                    message = "Stock not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<StockEditDTO> Get(int stockNo)
         {
             string message = String.Empty;

@@ -60,6 +60,7 @@ namespace DiningRoomMenu.Controls.IngredientControls.ViewModels
         public void Clear()
         {
             this.ingredient = null;
+            this.Stocks.Clear();
             RaisePropertyChangedEvent("Name");
         }
 

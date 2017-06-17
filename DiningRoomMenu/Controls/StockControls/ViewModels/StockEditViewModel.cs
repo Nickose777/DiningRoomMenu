@@ -58,6 +58,13 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
             }
         }
 
+        public void Clear()
+        {
+            this.stock = null;
+            this.IngredientCount.Clear();
+            RaisePropertyChangedEvent("StockNo");
+        }
+
         public ICommand SaveCommand { get; private set; }
 
         public ICommand DeleteCommand { get; private set; }
