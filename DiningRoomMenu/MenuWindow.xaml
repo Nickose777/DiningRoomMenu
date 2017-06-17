@@ -5,7 +5,7 @@
         Title="MenuWindow" Height="300" Width="300" WindowState="Maximized">
     <Grid Name="mainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="150" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         

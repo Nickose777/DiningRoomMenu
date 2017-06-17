@@ -291,8 +291,14 @@
       <Project>{0a9776a2-6775-4c56-8e7f-ac5d99f59034}</Project>
       <Name>DiningRoomMenu.Logic</Name>
     </ProjectReference>
+    <ProjectReference Include="..\DiningRoomMenu.Theme\DiningRoomMenu.Theme.csproj">
+      <Project>{e7473a7d-5d48-41e3-a1c2-938cb31d39e4}</Project>
+      <Name>DiningRoomMenu.Theme</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\background.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

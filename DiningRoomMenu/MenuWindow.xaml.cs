@@ -67,7 +67,7 @@ namespace DiningRoomMenu
             ColumnDefinition c1 = new ColumnDefinition();
             ColumnDefinition c2 = new ColumnDefinition();
 
-            c1.Width = new GridLength(1, GridUnitType.Star);
+            c1.Width = new GridLength(2, GridUnitType.Star);
             c2.Width = new GridLength(1, GridUnitType.Star);
 
             grid.ColumnDefinitions.Add(c1);
