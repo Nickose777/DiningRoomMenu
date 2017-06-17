@@ -4,6 +4,11 @@
     <SolidColorBrush x:Key="buttonConfirmBackgroundColor" Color="#5CC061" />
     <SolidColorBrush x:Key="buttonConfirmMouseOverBackgroundColor" Color="#4A9A4E" />
     <SolidColorBrush x:Key="buttonConfirmNotEnabledBackgroundColor" Color="#5C6E5D" />
+
+    <SolidColorBrush x:Key="buttonDeleteBackgroundColor" Color="#EE4541" />
+    <SolidColorBrush x:Key="buttonDeleteMouseOverBackgroundColor" Color="#B53432" />
+    <SolidColorBrush x:Key="buttonDeleteNotEnabledBackgroundColor" Color="#5C6E5D" />
+
     <SolidColorBrush x:Key="buttonNavigationBackgroundColor" Color="#A8A8A8" />
     <SolidColorBrush x:Key="buttonNavigationMouseOverBackgroundColor" Color="#4D4D4D" />
     
@@ -63,6 +68,42 @@
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="Background" Value="{StaticResource buttonNavigationMouseOverBackgroundColor}" />
+            </Trigger>
+            <!--<Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
+                <Setter Property="BorderBrush" TargetName="border" Value="#FF2C628B"/>
+            </Trigger>-->
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Button" x:Key="ButtonDeleteStyle">
+        <Setter Property="Background" Value="{StaticResource buttonDeleteBackgroundColor}" />
+
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="20" />
+        <Setter Property="FontFamily" Value="Comic Sans MS" />
+
+        <Setter Property="Width" Value="120" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Margin" Value="10" />
+        <Setter Property="Padding" Value="10,3" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border Background="{TemplateBinding Background}" BorderBrush="Black" CornerRadius="4">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="{StaticResource buttonDeleteMouseOverBackgroundColor}" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{StaticResource buttonConfirmNotEnabledBackgroundColor}" />
+                <Setter Property="Opacity" Value="0.5" />
             </Trigger>
             <!--<Trigger Property="IsPressed" Value="True">
                 <Setter Property="Background" TargetName="border" Value="#FFC4E5F6"/>
