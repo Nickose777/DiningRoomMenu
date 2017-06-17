@@ -9,8 +9,7 @@ namespace DiningRoomMenu
             return new Window
             {
                 Content = element,
-                SizeToContent = System.Windows.SizeToContent.WidthAndHeight,
-                WindowStartupLocation = WindowStartupLocation.CenterScreen
+                WindowState = WindowState.Maximized
             };
         }
     }

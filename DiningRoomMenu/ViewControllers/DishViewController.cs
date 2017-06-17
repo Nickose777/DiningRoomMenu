@@ -150,6 +150,7 @@ namespace DiningRoomMenu.ViewControllers
             DishEditViewModel viewModel = new DishEditViewModel(dishEditDTO, recipeAddViewModel);
             DishEditView view = new DishEditView(viewModel);
             Window window = WindowFactory.CreateByContentsSize(view);
+            window.MinWidth = view.MinWidth;
 
             viewModel.DishSaveRequest += (s, e) =>
             {

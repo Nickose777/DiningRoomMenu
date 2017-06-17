@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="500" d:DesignWidth="500" Background="{StaticResource standartBackground}">
+             d:DesignHeight="500" d:DesignWidth="700" Background="{StaticResource standartBackground}">
     <GroupBox Header="Редактирование">
         <Grid>
             <Grid.ColumnDefinitions>
@@ -44,10 +44,10 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Text="Ингредиенты на складе:" Style="{StaticResource TextBlockStandartStyle}" />
-                <DataGrid Grid.Row="1" AutoGenerateColumns="False" ItemsSource="{Binding IngredientCount}">
+                <DataGrid Grid.Row="1" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="False" ItemsSource="{Binding IngredientCount}">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Ingredient" Binding="{Binding Ingredient}" />
-                        <DataGridTextColumn Header="Count" Binding="{Binding Count}" />
+                        <DataGridTextColumn Width="*" Header="Ингредиент" Binding="{Binding Ingredient}" SortDirection="Ascending" IsReadOnly="True" />
+                        <DataGridTextColumn Width="*" Header="На складе" Binding="{Binding Count}" />
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

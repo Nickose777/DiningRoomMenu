@@ -15,7 +15,10 @@ namespace DiningRoomMenu
             IControllerFactory factory = Factory.CreateFactory();
             IViewControllerFactory viewFactory = new ViewControllerFactory(factory);
 
-            MenuWindow mainWindow = new MenuWindow(viewFactory);
+            MenuWindow mainWindow = new MenuWindow(viewFactory)
+            {
+                Title = "Organic"
+            };
 
             this.ShutdownMode = System.Windows.ShutdownMode.OnMainWindowClose;
             this.MainWindow = mainWindow;

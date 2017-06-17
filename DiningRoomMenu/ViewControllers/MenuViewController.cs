@@ -61,6 +61,8 @@ namespace DiningRoomMenu.ViewControllers
                     UIElement view = dishViewController.GetEditView(ingredientSubject, controllerMessage.Data);
                     Window window = WindowFactory.CreateByContentsSize(view);
 
+                    window.Title = String.Format("{0} - {1}", dishName, controllerMessage.Data.CategoryName);
+
                     dishViewController.DishDeleted += (s, e) => 
                     {
                         if (dishName == e.Data)

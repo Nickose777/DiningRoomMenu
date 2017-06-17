@@ -32,7 +32,7 @@
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Add" Command="{Binding SaveCommand}" IsDefault="True" Style="{StaticResource ButtonStandartStyle}" />
+            <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Добавить" Command="{Binding SaveCommand}" IsDefault="True" Style="{StaticResource ButtonStandartStyle}" />
         </Grid>
     </GroupBox>
 </UserControl>

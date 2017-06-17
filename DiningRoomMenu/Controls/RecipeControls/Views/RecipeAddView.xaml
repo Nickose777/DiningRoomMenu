@@ -6,12 +6,12 @@
              xmlns:Views="clr-namespace:DiningRoomMenu.Controls.IngredientControls.Views"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="700" Background="{StaticResource standartBackground}">
-    <GroupBox Header="Добавить рецепт">
+    <GroupBox Header="Добавление рецепта">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
             </Grid.ColumnDefinitions>
             
             <Grid Grid.Column="0">

@@ -56,6 +56,7 @@
                                                 </Button.Template>
                                             </Button>
                                             <TextBox DockPanel.Dock="Left"  Text="{Binding NewName, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MenuItem}" />
+                                            <TextBlock DockPanel.Dock="Right" Text="грн" />
                                             <TextBox DockPanel.Dock="Right" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MenuItem}" />
                                             <Rectangle Fill="{StaticResource brush}"/>
                                         </DockPanel>

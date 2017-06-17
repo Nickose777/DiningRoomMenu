@@ -8,5 +8,6 @@
         <ResourceDictionary Source="ButtonTheme.xaml" />
         <ResourceDictionary Source="GroupBoxTheme.xaml" />
         <ResourceDictionary Source="ListBoxTheme.xaml" />
+        <ResourceDictionary Source="DataGridTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

@@ -5,60 +5,119 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:Controls="clr-namespace:DiningRoomMenu.Controls.RecipeControls.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        
-        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" Text="{Binding Name}" />
-        <TextBlock Grid.Row="1" Text="Name:" />
-        <TextBlock Grid.Row="2" Text="Price:" />
-        <TextBlock Grid.Row="3" Text="Recipes:" />
+             d:DesignHeight="500" d:DesignWidth="1100"
+             MinWidth="1100"
+             Background="{StaticResource standartBackground}">
+    <GroupBox Header="Редактирование блюда" >
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-        <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-        <TextBox Grid.Column="1" Grid.Row="2" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" />
-        <ListBox Grid.Column="1" Grid.Row="3" ItemsSource="{Binding Recipes}" SelectedItem="{Binding Recipe}">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <TextBlock Text="{Binding Name}" />
-                        <Separator />
-                        <ItemsControl ItemsSource="{Binding Ingredients}">
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>
-                                        <TextBlock.Text>
-                                            <MultiBinding StringFormat="{}{0}. {1}">
-                                                <Binding Path="Ingredient" />
-                                                <Binding Path="Portion" />
-                                            </MultiBinding>
-                                        </TextBlock.Text>
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-        <Expander Grid.Column="1" Grid.Row="4">
-            <Controls:RecipeAddView DataContext="{Binding RecipeAddViewModel}" />
-        </Expander>
+            <Grid Grid.Column="0" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" Margin="60,0" Content="Save Recipes" Command="{Binding SaveRecipesCommand}" />
-        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Right" Margin="60,0" Content="Delete Selected" Command="{Binding RemoveRecipeCommand}" />
+                <TextBlock Grid.Row="0" Text="Название:" Style="{StaticResource TextBlockStandartStyle}" />
+                <TextBlock Grid.Row="1" Text="Цена:" Style="{StaticResource TextBlockStandartStyle}" />
 
-        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" Content="Save" Command="{Binding SaveCommand}" IsDefault="True" />
-        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Right" Content="Delete" Command="{Binding DeleteCommand}" />
-    </Grid>
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0" Style="{StaticResource StandartTextBox}" />
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Price, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch" Margin="0" Style="{StaticResource StandartTextBox}" />
+
+                <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Left" Content="Сохранить" Command="{Binding SaveCommand}" Style="{StaticResource ButtonStandartStyle}" />
+                <Button Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Right" Content="Удалить" Command="{Binding DeleteCommand}" Style="{StaticResource ButtonDeleteStyle}" />
+            </Grid>
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,5" Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            <Grid Grid.Column="2" Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                <TextBlock Grid.Row="0" Text="Рецепты блюда:" Style="{StaticResource TextBlockStandartStyle}" />
+                <ListBox Grid.Row="1" Grid.RowSpan="3" ItemsSource="{Binding Recipes}" SelectedItem="{Binding Recipe}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Name, StringFormat='&quot;{0}&quot;'}" />
+                                <Separator />
+                                <ItemsControl ItemsSource="{Binding Ingredients}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock>
+                                                <TextBlock.Text>
+                                                    <MultiBinding StringFormat="{}{0}. {1}">
+                                                        <Binding Path="Ingredient" />
+                                                        <Binding Path="Portion" />
+                                                    </MultiBinding>
+                                                </TextBlock.Text>
+                                            </TextBlock>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Separator />
+                                <TextBlock Text="{Binding Description}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+                
+                <Button Grid.Row="1" Grid.Column="1" Content="Сохранить рецепты" Command="{Binding SaveRecipesCommand}" Width="200" Style="{StaticResource ButtonStandartStyle}" />
+                <Button Grid.Row="2" Grid.Column="2" Content="Удалить рецепт" Command="{Binding RemoveRecipeCommand}" Width="200" Style="{StaticResource ButtonDeleteStyle}"/>
+            </Grid>
+
+            <Expander Grid.ColumnSpan="3" Grid.Row="1">
+                <!--<Expander.Header>
+                    <TextBlock Text="Добавить рецепт" Style="{StaticResource TextBlockStandartStyle}" />
+                </Expander.Header>-->
+                <Expander.Style>
+                    <Style TargetType="Expander">
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsExpanded,RelativeSource={RelativeSource Self}}" Value="False">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="Добавить рецепт" Style="{StaticResource TextBlockStandartStyle}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                            <DataTrigger Binding="{Binding IsExpanded,RelativeSource={RelativeSource Self}}" Value="True">
+                                <Setter Property="HeaderTemplate">
+                                    <Setter.Value>
+                                        <DataTemplate>
+                                            <TextBlock Text="Показать блюдо" Style="{StaticResource TextBlockStandartStyle}" />
+                                        </DataTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Expander.Style>
+                
+                <Controls:RecipeAddView DataContext="{Binding RecipeAddViewModel}" />
+            </Expander>
+        </Grid>
+    </GroupBox>
 </UserControl>

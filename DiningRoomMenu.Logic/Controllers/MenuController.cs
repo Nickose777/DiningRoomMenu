@@ -26,7 +26,7 @@ namespace DiningRoomMenu.Logic.Controllers
 
             try
             {
-                var categoryEntities = unitOfWork.Categories.GetAll();
+                var categoryEntities = unitOfWork.Categories.GetAll().OrderBy(category => category.Name);
                 foreach (CategoryEntity categoryEntity in categoryEntities)
                 {
                     CategoryMenuDTO category = new CategoryMenuDTO
