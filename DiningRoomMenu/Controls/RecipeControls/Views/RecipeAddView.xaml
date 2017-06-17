@@ -5,78 +5,80 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:Views="clr-namespace:DiningRoomMenu.Controls.IngredientControls.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="booleanToVisibilityConverter" />
-    </UserControl.Resources>
-    <GroupBox Header="Add Recipe">
+             d:DesignHeight="500" d:DesignWidth="700" Background="{StaticResource standartBackground}">
+    <GroupBox Header="Добавить рецепт">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-
-            <TextBlock Grid.Row="0" Text="Name:" />
-            <TextBlock Grid.Row="1" Text="Description:" />
-            <TextBlock Grid.Row="2" Text="Dish:" Visibility="{Binding MustSelectDish, Converter={StaticResource booleanToVisibilityConverter}}"/>
-            <TextBlock Grid.Row="3" Text="Ingredients:" />
-
-            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" Text="{Binding Description}" />
-            <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Dishes}" SelectedItem="{Binding Dish}" Visibility="{Binding MustSelectDish, Converter={StaticResource booleanToVisibilityConverter}}">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock>
-                            <TextBlock.Text>
-                                <MultiBinding StringFormat="{}{0} ({1}) - {2}$">
-                                    <Binding Path="Name" />
-                                    <Binding Path="CategoryName" />
-                                    <Binding Path="Price" />
-                                </MultiBinding>
-                            </TextBlock.Text>
-                        </TextBlock>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-            <Grid Grid.Column="1" Grid.Row="3">
+            
+            <Grid Grid.Column="0">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <TextBox Grid.Column="0" Grid.Row="0" Text="{Binding Portion}" />
-                <Views:IngredientListView Grid.Column="0" Grid.Row="1" Grid.RowSpan="2" DataContext="{Binding IngredientsViewModel}" />
+                <TextBlock Grid.Row="0" Text="Название:" Style="{StaticResource TextBlockStandartStyle}" />
+                <TextBlock Grid.Row="1" Text="Описание:" Style="{StaticResource TextBlockStandartStyle}" />
 
-                <ListBox Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" ItemsSource="{Binding Ingredients}" SelectedItem="{Binding IngredientPortion}">
-                    <ListBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock>
-                                <TextBlock.Text>
-                                    <MultiBinding StringFormat="{}{0}. {1}">
-                                        <Binding Path="Ingredient" />
-                                        <Binding Path="Portion" />
-                                    </MultiBinding>
-                                </TextBlock.Text>
-                            </TextBlock>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-                
-                <Button Grid.Column="1" Grid.Row="2" Content="Remove" Command="{Binding RemoveCommand}" />
+                <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandartTextBox}" />
+                <TextBox Grid.ColumnSpan="2" Grid.Row="2" Text="{Binding Description}" Style="{StaticResource MultilineTextBox}" />
+
+                <Button Grid.ColumnSpan="2" Grid.Row="3" Content="Добавить" Command="{Binding SaveCommand}" Style="{StaticResource ButtonStandartStyle}" />
             </Grid>
-            <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Add" Command="{Binding SaveCommand}" IsDefault="True" />
+
+            <StackPanel Grid.Column="1" Margin="10,5" Orientation="Horizontal">
+                <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+            </StackPanel>
+            
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Views:IngredientListView Grid.ColumnSpan="2" Grid.Row="0" DataContext="{Binding IngredientsViewModel}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="Порция:" Style="{StaticResource TextBlockStandartStyle}" />
+                <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Portion}" Style="{StaticResource StandartTextBox}" />
+
+
+                <StackPanel Grid.Column="2" Grid.RowSpan="2" Margin="10,5" Orientation="Horizontal">
+                    <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                </StackPanel>
+
+                <GroupBox Grid.Column="3" Header="Выбранные ингредиенты">
+                    <ListBox ItemsSource="{Binding Ingredients}" SelectedItem="{Binding IngredientPortion}">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock>
+                                    <TextBlock.Text>
+                                        <MultiBinding StringFormat="{}{0}. {1}">
+                                            <Binding Path="Ingredient" />
+                                            <Binding Path="Portion" />
+                                        </MultiBinding>
+                                    </TextBlock.Text>
+                                </TextBlock>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </GroupBox>
+                <Button Grid.Column="3" Grid.Row="1" Content="Удалить" Command="{Binding RemoveCommand}" Style="{StaticResource ButtonDeleteStyle}" />
+            </Grid>
         </Grid>
     </GroupBox>
 </UserControl>
