@@ -142,6 +142,36 @@ namespace DiningRoomMenu.Logic.Controllers
             return new ControllerMessage(success, message);
         }
 
+        public ControllerMessage Delete(string dishName)
+        {
+            string message = String.Empty;
+            bool success = true;
+
+            try
+            {
+                DishEntity dishEntity = unitOfWork.Dishes.Get(dishName);
+                if (dishEntity != null)
+                {
+                    unitOfWork.Dishes.Remove(dishEntity);
+                    unitOfWork.Commit();
+
+                    message = "Dish deleted";
+                }
+                else
+                {
+                    success = false;
+                    message = "Dish not found";
+                }
+            }
+            catch (Exception ex)
+            {
+                success = false;
+                message = ExceptionMessageBuilder.BuildMessage(ex);
+            }
+
+            return new ControllerMessage(success, message);
+        }
+
         public DataControllerMessage<DishEditDTO> Get(string dishName)
         {
             string message = String.Empty;

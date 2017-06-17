@@ -5,6 +5,7 @@ using DiningRoomMenu.Controls.DishControls.ViewModels;
 using DiningRoomMenu.Controls.DishControls.Views;
 using DiningRoomMenu.Controls.IngredientControls.ViewModels;
 using DiningRoomMenu.Controls.RecipeControls.ViewModels;
+using DiningRoomMenu.EventHandlers;
 using DiningRoomMenu.Logic.Contracts;
 using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Dish;
@@ -20,6 +21,8 @@ namespace DiningRoomMenu.ViewControllers
 {
     class DishViewController : ViewControllerBase, IDishViewController
     {
+        public event GenericEventHandler<string> DishDeleted;
+
         public DishViewController(IControllerFactory factory)
             : base(factory) { }
 
@@ -102,6 +105,22 @@ namespace DiningRoomMenu.ViewControllers
                     }
                 }
             };
+            viewModel.DishDeleteRequest += (s, e) =>
+            {
+                using (IDishController controller = factory.CreateDishController())
+                {
+                    ControllerMessage controllerMessage = controller.Delete(e.Data.OldName);
+                    if (controllerMessage.IsSuccess)
+                    {
+                        Notify();
+                        RaiseDishDeletedEvent(e.Data.OldName);
+                    }
+                    else
+                    {
+                        MessageBox.Show(controllerMessage.Message);
+                    }
+                }
+            };
 
             return view;
         }
@@ -164,6 +183,17 @@ namespace DiningRoomMenu.ViewControllers
             };
 
             window.Show();
+        }
+
+
+        private void RaiseDishDeletedEvent(string dishName)
+        {
+            var handler = DishDeleted;
+            if (handler != null)
+            {
+                GenericEventArgs<string> e = new GenericEventArgs<string>(dishName);
+                handler(this, e);
+            }
         }
     }
 }

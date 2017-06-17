@@ -57,8 +57,8 @@
 
         <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" Margin="60,0" Content="Save Recipes" Command="{Binding SaveRecipesCommand}" />
         <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Right" Margin="60,0" Content="Delete Selected" Command="{Binding RemoveRecipeCommand}" />
-        
-        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" Content="Save" Command="{Binding SaveCommand}" />
+
+        <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Left" Content="Save" Command="{Binding SaveCommand}" IsDefault="True" />
         <Button Grid.ColumnSpan="2" Grid.Row="5" HorizontalAlignment="Right" Content="Delete" Command="{Binding DeleteCommand}" />
     </Grid>
 </UserControl>
