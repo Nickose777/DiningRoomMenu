@@ -9,7 +9,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <StackPanel Grid.Column="0" Background="#333333">
+        <StackPanel Grid.Column="0" Background="{StaticResource standartBackground}">
             <local:LogoControl />
             <Button Content="Меню" Click="DisplayMenu_Click" Style="{StaticResource ButtonNavigationStyle}" />
             <Button Content="Ингредиенты" Click="DisplayIngredients_Click" Style="{StaticResource ButtonNavigationStyle}" />

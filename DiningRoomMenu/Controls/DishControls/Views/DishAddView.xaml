@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <GroupBox Header="Add Dish">
+    <GroupBox Header="Добавление блюда">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -14,24 +14,25 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <TextBlock Grid.Row="0" Text="Name:" />
-            <TextBlock Grid.Row="1" Text="Price:" />
-            <TextBlock Grid.Row="2" Text="Category:" />
+            <TextBlock Grid.Row="0" Text="Название:" Style="{StaticResource TextBlockStandartStyle}" />
+            <TextBlock Grid.Row="1" Text="Цена:" Style="{StaticResource TextBlockStandartStyle}" />
+            <TextBlock Grid.Row="2" Text="Категория:" VerticalAlignment="Top" Style="{StaticResource TextBlockStandartStyle}" />
 
-            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" />
-            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Price}" />
-            <ListBox Grid.Column="1" Grid.Row="2" ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}">
+            <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandartTextBox}" />
+            <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Price}" Style="{StaticResource StandartTextBox}" />
+            <ListBox Grid.ColumnSpan="2" Grid.Row="3" ItemsSource="{Binding Categories}" SelectedItem="{Binding Category}">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Name}" />
                     </DataTemplate>
                 </ListBox.ItemTemplate>
             </ListBox>
-            <Button Grid.ColumnSpan="2" Grid.Row="3" Content="Add" Command="{Binding SaveCommand}" IsDefault="True" />
+            <Button Grid.ColumnSpan="2" Grid.Row="4" Content="Add" Command="{Binding SaveCommand}" IsDefault="True" Style="{StaticResource ButtonStandartStyle}" />
         </Grid>
     </GroupBox>
 </UserControl>

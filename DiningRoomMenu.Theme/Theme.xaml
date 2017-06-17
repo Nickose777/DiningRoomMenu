@@ -2,7 +2,11 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="StandartThemes.xaml" />
         <ResourceDictionary Source="TextBoxTheme.xaml" />
+        <ResourceDictionary Source="TextBlockTheme.xaml" />
         <ResourceDictionary Source="ButtonTheme.xaml" />
+        <ResourceDictionary Source="GroupBoxTheme.xaml" />
+        <ResourceDictionary Source="ListBoxTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

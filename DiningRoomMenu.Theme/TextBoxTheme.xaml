@@ -22,4 +22,17 @@
         <Setter Property="FontFamily" Value="Comic Sans MS" />
         <Setter Property="Margin" Value="0,5" />
     </Style>
+    
+    <Style TargetType="TextBox" x:Key="StandartTextBox">
+        <Setter Property="Margin" Value="20,0" />
+        <Setter Property="MinWidth" Value="100" />
+        <Setter Property="HorizontalAlignment" Value="Center" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="Background" Value="{Binding}" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontFamily" Value="Comic Sans MS" />
+        <Setter Property="BorderThickness" Value="0,0,0,2" />
+    </Style>
 </ResourceDictionary>

@@ -4,17 +4,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid Name="mainGrid">
+             d:DesignHeight="400" d:DesignWidth="300">
+    <Grid Name="mainGrid" Background="{StaticResource standartBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         
         <StackPanel Grid.Row="0">
-            <TextBlock HorizontalAlignment="Center" Text="Add" />
-            <Button Content="Category" Click="DisplayCategoryView_Click" />
-            <Button Content="Dish" Click="DisplayDishView_Click" />
+            <TextBlock HorizontalAlignment="Center" FontSize="20" Margin="0,20" Text="Добавление" Style="{StaticResource TextBlockStandartStyle}" />
+            <Button Content="Категория" Click="DisplayCategoryView_Click" Style="{StaticResource ButtonNavigationStyle}" />
+            <Button Content="Блюдо" Click="DisplayDishView_Click" Style="{StaticResource ButtonNavigationStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>
