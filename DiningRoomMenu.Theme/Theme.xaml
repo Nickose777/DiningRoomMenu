@@ -9,5 +9,6 @@
         <ResourceDictionary Source="GroupBoxTheme.xaml" />
         <ResourceDictionary Source="ListBoxTheme.xaml" />
         <ResourceDictionary Source="DataGridTheme.xaml" />
+        <ResourceDictionary Source="TabControlTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>

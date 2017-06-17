@@ -48,7 +48,20 @@
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Grid>
-                                                            <Ellipse Stroke="Black" StrokeThickness="1" Fill="{StaticResource buttonConfirmMouseOverBackgroundColor}" />
+                                                            <Ellipse Stroke="Black" StrokeThickness="1">
+                                                                <Ellipse.Style>
+                                                                    <Style TargetType="Ellipse">
+                                                                        <Style.Triggers>
+                                                                            <Trigger Property="IsMouseOver" Value="False">
+                                                                                <Setter Property="Fill" Value="#58F000" />
+                                                                            </Trigger>
+                                                                            <Trigger Property="IsMouseOver" Value="True">
+                                                                                <Setter Property="Fill" Value="#FFF" />
+                                                                            </Trigger>
+                                                                        </Style.Triggers>
+                                                                    </Style>
+                                                                </Ellipse.Style>
+                                                            </Ellipse>
                                                             <ContentPresenter HorizontalAlignment="Center"
                                                                             VerticalAlignment="Center"/>
                                                         </Grid>

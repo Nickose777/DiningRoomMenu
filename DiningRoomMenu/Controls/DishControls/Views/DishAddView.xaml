@@ -21,7 +21,7 @@
 
             <TextBlock Grid.Row="0" Text="Название:" Style="{StaticResource TextBlockStandartStyle}" />
             <TextBlock Grid.Row="1" Text="Цена:" Style="{StaticResource TextBlockStandartStyle}" />
-            <TextBlock Grid.Row="2" Text="Категория:" VerticalAlignment="Top" Style="{StaticResource TextBlockStandartStyle}" />
+            <TextBlock Grid.Row="2" Text="Раздел:" VerticalAlignment="Top" Style="{StaticResource TextBlockStandartStyle}" />
 
             <TextBox Grid.Column="1" Grid.Row="0" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource StandartTextBox}" />
             <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Price}" Style="{StaticResource StandartTextBox}" />

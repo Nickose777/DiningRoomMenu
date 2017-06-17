@@ -36,6 +36,7 @@
         <Setter Property="FontSize" Value="14" />
         <Setter Property="FontFamily" Value="Comic Sans MS" />
         <Setter Property="BorderThickness" Value="0,0,0,2" />
+        <Setter Property="CaretBrush" Value="White" />
     </Style>
 
     <Style TargetType="TextBox" x:Key="MultilineTextBox">
@@ -47,6 +48,6 @@
         <Setter Property="FontFamily" Value="Comic Sans MS" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="TextWrapping" Value="Wrap" />
-        <Setter Property="AcceptsReturn" Value="True" />
+        <Setter Property="CaretBrush" Value="White" />
     </Style>
 </ResourceDictionary>

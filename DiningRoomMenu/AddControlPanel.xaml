@@ -13,7 +13,7 @@
         
         <StackPanel Grid.Row="0">
             <TextBlock HorizontalAlignment="Center" FontSize="20" Margin="0,20" Text="Добавление" Style="{StaticResource TextBlockStandartStyle}" />
-            <Button Content="Категории" Click="DisplayCategoryView_Click" Style="{StaticResource ButtonNavigationStyle}" />
+            <Button Content="Раздела меню" Click="DisplayCategoryView_Click" Style="{StaticResource ButtonNavigationStyle}" />
             <Button Content="Блюда" Click="DisplayDishView_Click" Style="{StaticResource ButtonNavigationStyle}" />
         </StackPanel>
     </Grid>

@@ -9,9 +9,9 @@
     <GroupBox Header="Добавление рецепта">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             
             <Grid Grid.Column="0">
@@ -53,7 +53,7 @@
                 </Grid.RowDefinitions>
 
                 <Views:IngredientListView Grid.ColumnSpan="2" Grid.Row="0" DataContext="{Binding IngredientsViewModel}" />
-                <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="Порция:" Style="{StaticResource TextBlockStandartStyle}" />
+                <TextBlock Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Text="Порция инг-та:" Style="{StaticResource TextBlockStandartStyle}" />
                 <TextBox Grid.Column="1" Grid.Row="1" Text="{Binding Portion}" Style="{StaticResource StandartTextBox}" />
 
 
@@ -61,7 +61,7 @@
                     <Separator Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
                 </StackPanel>
 
-                <GroupBox Grid.Column="3" Header="Выбранные ингредиенты">
+                <GroupBox Grid.Column="3" Header="Выбранные инг-ты">
                     <ListBox ItemsSource="{Binding Ingredients}" SelectedItem="{Binding IngredientPortion}">
                         <ListBox.ItemTemplate>
                             <DataTemplate>
