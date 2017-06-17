@@ -18,5 +18,17 @@ namespace DiningRoomMenu.Controls.IngredientControls.Views
             InitializeComponent();
             this.DataContext = viewModel;
         }
+
+        private void ListBox_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            IngredientListViewModel viewModel = this.DataContext as IngredientListViewModel;
+            if (viewModel != null)
+            {
+                if (viewModel.SelectCommand.CanExecute(null))
+                {
+                    viewModel.SelectCommand.Execute(null);
+                }
+            }
+        }
     }
 }
