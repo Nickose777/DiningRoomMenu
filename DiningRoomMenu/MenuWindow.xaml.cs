@@ -88,6 +88,20 @@ namespace DiningRoomMenu
             UIElement viewList = ingredientViewController.GetListView();
             UIElement viewEdit = ingredientViewController.GetEditView();
 
+            DisplayThreeElements(viewAdd, viewList, viewEdit);
+        }
+
+        private void DisplayStocks_Click(object sender, RoutedEventArgs e)
+        {
+            UIElement viewAdd = stockViewController.GetAddView();
+            UIElement viewList = stockViewController.GetListView();
+            UIElement viewEdit = stockViewController.GetEditView();
+
+            DisplayThreeElements(viewAdd, viewList, viewEdit);
+        }
+
+        private void DisplayThreeElements(UIElement viewAdd, UIElement viewList, UIElement viewEdit)
+        {
             Grid grid = new Grid();
 
             ColumnDefinition c1 = new ColumnDefinition();
@@ -100,7 +114,7 @@ namespace DiningRoomMenu
             c2.Width = new GridLength(1, GridUnitType.Star);
 
             r1.Height = new GridLength(1, GridUnitType.Star);
-            r2.Height = new GridLength(1, GridUnitType.Star);
+            r2.Height = new GridLength(3, GridUnitType.Star);
 
             grid.ColumnDefinitions.Add(c1);
             grid.ColumnDefinitions.Add(c2);
@@ -123,11 +137,6 @@ namespace DiningRoomMenu
             grid.Children.Add(viewEdit);
 
             DisplayOnGrid(grid);
-        }
-
-        private void DisplayStocks_Click(object sender, RoutedEventArgs e)
-        {
-
         }
 
         private void DisplayOnGrid(UIElement view)

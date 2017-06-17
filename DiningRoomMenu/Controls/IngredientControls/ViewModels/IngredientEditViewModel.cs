@@ -77,6 +77,7 @@ namespace DiningRoomMenu.Controls.IngredientControls.ViewModels
         {
             return
                 ingredient != null &&
+                ingredient.OldName != ingredient.NewName &&
                 !String.IsNullOrEmpty(Name);
         }
 

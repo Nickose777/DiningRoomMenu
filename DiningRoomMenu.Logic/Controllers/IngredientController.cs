@@ -102,7 +102,9 @@ namespace DiningRoomMenu.Logic.Controllers
                         NewName = ingredientEntity.Name,
                         OldName = ingredientEntity.Name,
                         StocksAvailable = unitOfWork.Stocks.GetAllWithIngredient(ingredientName)
-                            .Select(stock => stock.StockNo).ToList()
+                            .Select(stock => stock.StockNo)
+                            .OrderBy(stockNo => stockNo)
+                            .ToList()
                     };
                 }
                 else

@@ -1,5 +1,8 @@
 ﻿using DiningRoomMenu.EventHandlers;
+using DiningRoomMenu.Logic.Contracts;
+using DiningRoomMenu.Logic.Contracts.Controllers;
 using DiningRoomMenu.Logic.DTO.Stock;
+using DiningRoomMenu.Logic.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,18 +18,44 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
         public event GenericEventHandler<StockEditDTO> StockSaveRequest;
         public event GenericEventHandler<StockEditDTO> StockDeleteRequest;
 
-        private readonly StockEditDTO stock;
+        private readonly IControllerFactory factory;
+        private StockEditDTO stock;
 
-        public StockEditViewModel(StockEditDTO stock)
+        public StockEditViewModel(IControllerFactory factory, StockListViewModel viewModel, StockEditDTO stockEditDTO = null)
         {
-            this.stock = stock;
+            this.factory = factory;
+            this.stock = stockEditDTO;
 
             this.SaveCommand = new DelegateCommand(
                 () => RaiseStockSaveRequestEvent(stock),
                 obj => CanSave());
-            this.DeleteCommand = new DelegateCommand(() => RaiseStockDeleteRequestEvent(stock));
+            this.DeleteCommand = new DelegateCommand(
+                () => RaiseStockDeleteRequestEvent(stock), 
+                obj => stock != null);
 
-            this.IngredientCount = new ObservableCollection<IngredientCount>(stock.IngredientCount);
+            this.IngredientCount = new ObservableCollection<IngredientCount>();
+
+            viewModel.StockSelected += (s, e) => ChangeStock(e.Data.StockNo);
+        }
+
+        public void ChangeStock(int stockNo)
+        {
+            using (IStockController controller = factory.CreateStockController())
+            {
+                DataControllerMessage<StockEditDTO> controllerMessage = controller.Get(stockNo);
+                if (controllerMessage.IsSuccess)
+                {
+                    this.stock = controllerMessage.Data;
+
+                    this.IngredientCount.Clear();
+                    foreach (IngredientCount ingredientCount in stock.IngredientCount)
+                    {
+                        this.IngredientCount.Add(ingredientCount);
+                    }
+
+                    RaisePropertyChangedEvent("StockNo");
+                }
+            }
         }
 
         public ICommand SaveCommand { get; private set; }
@@ -47,7 +76,9 @@ namespace DiningRoomMenu.Controls.StockControls.ViewModels
 
         private bool CanSave()
         {
-            return StockNo > 0;
+            return
+                stock != null &&
+                StockNo > 0;
         }
 
         private void RaiseStockSaveRequestEvent(StockEditDTO stock)

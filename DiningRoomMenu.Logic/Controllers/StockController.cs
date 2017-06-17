@@ -102,7 +102,7 @@ namespace DiningRoomMenu.Logic.Controllers
                         OldStockNo = stockNo,
                         NewStockNo = stockNo
                     };
-                    foreach (StockIngredientEntity stockIngredientEntity in stockEntity.StockIngredients)
+                    foreach (StockIngredientEntity stockIngredientEntity in stockEntity.StockIngredients.OrderBy(si => si.Ingredient.Name))
                     {
                         data.IngredientCount.Add(new IngredientCount
                         {
