@@ -3,5 +3,6 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="TextBoxTheme.xaml" />
+        <ResourceDictionary Source="ButtonTheme.xaml" />
     </ResourceDictionary.MergedDictionaries>
 </ResourceDictionary>
