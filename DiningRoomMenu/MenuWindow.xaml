@@ -5,15 +5,15 @@
         Title="MenuWindow" Height="300" Width="300" WindowState="Maximized">
     <Grid Name="mainGrid">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="150" />
+            <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        
-        <StackPanel Grid.Column="0">
+
+        <StackPanel Grid.Column="0" Background="#333333">
             <local:LogoControl />
-            <Button Content="Menu" Click="DisplayMenu_Click" />
-            <Button Content="Ingredients" Click="DisplayIngredients_Click" />
-            <Button Content="Stocks" Click="DisplayStocks_Click" />
+            <Button Content="Меню" Click="DisplayMenu_Click" Style="{StaticResource ButtonNavigationStyle}" />
+            <Button Content="Ингредиенты" Click="DisplayIngredients_Click" Style="{StaticResource ButtonNavigationStyle}" />
+            <Button Content="Склады" Click="DisplayStocks_Click" Style="{StaticResource ButtonNavigationStyle}" />
         </StackPanel>
     </Grid>
 </Window>

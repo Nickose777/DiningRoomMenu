@@ -17,7 +17,7 @@
             </DrawingBrush.Drawing>
         </DrawingBrush>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.Background>
             <ImageBrush ImageSource="/Images/background.jpg" />
@@ -27,7 +27,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="10,0">
             <ItemsControl ItemsSource="{Binding Categories}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -48,7 +48,7 @@
                                                 <Button.Template>
                                                     <ControlTemplate TargetType="Button">
                                                         <Grid>
-                                                            <Ellipse Stroke="Black" StrokeThickness="1" Fill="{StaticResource buttonConfirmMouseOverColor}" />
+                                                            <Ellipse Stroke="Black" StrokeThickness="1" Fill="{StaticResource buttonConfirmMouseOverBackgroundColor}" />
                                                             <ContentPresenter HorizontalAlignment="Center"
                                                                             VerticalAlignment="Center"/>
                                                         </Grid>
